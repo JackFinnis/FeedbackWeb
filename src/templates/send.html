@@ -1,0 +1,28 @@
+<html>
+  	<head>
+    	<title>Send Feedback</title>
+        <link rel="stylesheet" href="/static/style.css">
+	</head>
+	<body>
+		<h1>{{title}}</h1>
+		{{description}}
+		
+		<h2>Send Feedback</h2>
+		<form id="form" action="/submitSend/{{publicID}}" onsubmit="return validate()" method="POST">
+			<textarea id="feedback" name="feedback" autofocus=true placeholder="Feedback"></textarea><br>
+			<input type="submit"><br>
+			<div id="message"></div>
+		</form>
+	</body>
+	<script>
+		function validate() {
+		    let editor = document.getElementById("feedback");
+			editor.value = editor.value.trim();
+		    if (editor.value == "") {
+		        editor.style.borderColor = "red";
+		        return false;
+		    }
+		    return true;
+		}
+	</script>
+</html>

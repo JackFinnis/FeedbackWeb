@@ -1,0 +1,35 @@
+<html>
+  	<head>
+    	<title>Get Feedback</title>
+        <link rel="stylesheet" href="/static/style.css">
+	</head>
+	<body>
+		<h1>Get Feedback</h1>
+		The simplest way to receieve anonymous feedback.<br><br>
+		How it works:
+		<ol>
+			<li>Setup a feedback page</li>
+			<li>Share the feedback link</li>
+			<li>People can submit their feedback</li>
+			<li>Browse the feedback</li>
+		</ol>
+		
+		<h2>Setup Feedback Page</h2>
+		<form action="/submitStart" onsubmit="return validate()" method="POST">
+			<input id="title" name="title" type="text" placeholder="Title"><br>
+			<textarea id="description" name="description" type="text" placeholder="Description (optional)"></textarea><br>
+			<input type="submit">
+		</form>
+	</body>
+	<script>
+		function validate() {
+		    let editor = document.getElementById("title");
+			editor.value = editor.value.trim()
+		    if (editor.value == "") {
+		        editor.style.borderColor = "red";
+		        return false;
+		    }
+		    return true;
+		}
+	</script>
+</html>
