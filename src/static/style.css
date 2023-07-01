@@ -2,8 +2,14 @@ body {
 	font-family: "system-ui";
 }
 @media (prefers-color-scheme: dark) {
-	body { background: black; color: white; }
+	body {
+		background: black;
+		color: white;
+	}
 }
 @media (prefers-color-scheme: light) {
-	body { background: white; color: black; }
+	body {
+		background: white;
+		color: black;
+	}
 }

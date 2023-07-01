@@ -1,0 +1,22 @@
+<html>
+  	<head>
+    	<title>View Feedback</title>
+        <link rel="stylesheet" href="/../static/style.css">
+	</head>
+	<body>
+		<h1>{{title}}</h1>
+		<a href="/send/{{public_id}}" target="_blank">Anonymous feedback link</a><br><br>
+		Make sure you save the <a href="/subject/{{private_id}}">url</a> of this page in a safe place so you can revisit it in future.
+		
+		<h2>Feedback</h2>
+		{% if feedbacks %}
+			<ul>
+				{% for feedback in feedbacks %}
+					<li>{{feedback.feedback}} <a href="/delete_feedback/{{feedback.feedback_id}}/{{private_id}}">Delete</a></li>
+				{% endfor %}
+			</ul>
+		{% else %}
+		    No feedback yet
+		{% endif %}
+	</body>
+</html>

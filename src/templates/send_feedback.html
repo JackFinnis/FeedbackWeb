@@ -1,14 +1,14 @@
 <html>
   	<head>
     	<title>Send Feedback</title>
-        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/../static/style.css">
 	</head>
 	<body>
 		<h1>{{title}}</h1>
 		{{description}}
 		
 		<h2>Send Feedback</h2>
-		<form id="form" action="/submitSend/{{publicID}}" onsubmit="return validate()" method="POST">
+		<form id="form" action="/send/submit/{{public_id}}" onsubmit="return validate()" method="POST">
 			<textarea id="feedback" name="feedback" autofocus=true placeholder="Feedback"></textarea><br>
 			<input type="submit"><br>
 			<div id="message"></div>

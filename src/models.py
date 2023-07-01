@@ -1,4 +1,4 @@
-class Topic:
+class Subject:
     def __init__(self, private_id, public_id, title, description):
         self.private_id = private_id
         self.public_id = public_id
@@ -15,27 +15,27 @@ class Topic:
 
     @staticmethod
     def from_dict(dict):
-        return Topic(
+        return Subject(
             dict['private_id'],
             dict['public_id'],
             dict['title'],
             dict['description'],
         )
     
-class Comment:
-    def __init__(self, comment, comment_id):
-        self.comment = comment
-        self.comment_id = comment_id
+class Feedback:
+    def __init__(self, feedback, feedback_id):
+        self.feedback = feedback
+        self.feedback_id = feedback_id
     
     def to_dict(self):
         return {
-            'comment': self.comment,
-            'comment_id': self.comment_id
+            'feedback': self.feedback,
+            'feedback_id': self.feedback_id
         }
 
     @staticmethod
     def from_dict(dict):
-        return Comment(
-            dict['comment'],
-            dict['comment_id']
+        return Feedback(
+            dict['feedback'],
+            dict['feedback_id']
         )
