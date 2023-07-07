@@ -1,37 +1,34 @@
 <html>
   	<head>
     	<title>Get Feedback</title>
-        <link rel="stylesheet" type="text/css" href="/../static/style.css">
+        <link rel="stylesheet" href="/static/style.css">
 	</head>
-	<body>
-		<h1>Get Feedback</h1>
-		The simplest way to receieve anonymous feedback.<br>
-		<br>
-		How it works:
-		<ol>
-			<li>Setup a feedback page</li>
-			<li>Share the feedback link</li>
-			<li>People can submit their feedback</li>
-			<li>Browse the feedback</li>
-		</ol>
-		
-		<h2>Setup Feedback Page</h2>
-		<form action="new/submit" onsubmit="return validate()" method="POST">
-			<input id="title" name="title" type="text" placeholder="Title"><br>
-			<textarea id="description" name="description" type="text" placeholder="Description (optional)"></textarea><br>
-			<input type="submit">
-		</form>
+	<body class="center">
+		<div>
+			<div style="text-align:center;">
+				<img class="icon" src="/static/logo.png" width="35" height="35">
+				<h1>Get Feedback</h1>
+				The easiest way to get anonymous feedback.
+			</div><br>
+			
+			<h2>How it works</h2>
+			<ol>
+				<li>Setup a feedback page</li>
+				<li>Share the response link</li>
+				<li>Wait for responses</li>
+				<li>Browse your feedback</li>
+			</ol><br>
+			
+			<h2>Setup a feedback page</h2>
+			<form action="new/submit" method="POST">
+				<input class="container" type="text" id="title" name="title" placeholder="* Title" required
+				oninvalid="setCustomValidity('Please enter the title of your feedback page')"
+				oninput="setCustomValidity('')"><br>
+				<textarea class="container" id="description" name="description" placeholder="Description"></textarea><br>
+				<h4 style="margin-top:15;">Company Logo</h4>
+				<input type="file" id="logo" name="logo" accept="image/*"><br>
+				<input type="submit">
+			</form>
+		</div>
 	</body>
-	<script>
-		function validate() {
-		    let editor = document.getElementById("title");
-			editor.value = editor.value.trim()
-		    if (editor.value == "") {
-		        editor.style.borderColor = "red";
-		        return false;
-		    } else {
-		    	return true;
-			}
-		}
-	</script>
 </html>

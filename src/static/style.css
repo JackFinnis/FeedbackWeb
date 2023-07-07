@@ -1,15 +1,107 @@
 body {
-	font-family: "system-ui";
+	font-family: system-ui;
+	display: flex;
+	justify-content: center;
+	--accent: #007AFF;
 }
-@media (prefers-color-scheme: dark) {
+
+a {
+	color: var(--accent);
+}
+
+ol, ul, p {
+	margin: 0px;
+}
+
+h1, h2, h4 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+input[type=text], textarea {
+	appearance: none;
+	width: 400px;
+	font-size: 1em;
+}
+
+textarea {
+	resize: none;
+	height: 100px;
+}
+
+input[type=file] {
+	font-size: 1em;
+	margin: 0px;
+	padding: 0px;
+}
+
+input[type=submit] {
+	appearance: none;
+	width: 400px;
+	padding: 12px;
+	margin-top: 20px;
+	margin-bottom: 50px;
+	font-size: 1em;
+	border-radius: 8px;
+	border: none;
+	color: white;
+	background-color: var(--accent);
+}
+input[type=submit]:active {
+	opacity: 0.8;
+}
+
+.container {
+	margin-top: 10px;
+	padding: 10px;
+	padding-left: 12px;
+	padding-bottom: 12px;
+	border-radius: 8px;
+	border: none;
+}
+
+.button {
+	background-color: var(--accent);
+	border: none;
+	color: white;
+	padding: 5px;
+	padding-left: 8px;
+	padding-right: 10px;
+	font-size: 1em;
+	border-radius: 8px;
+}
+.button:active {
+	opacity: 0.8;
+}
+
+.center {
+	align-items: center;
+}
+
+@media(prefers-color-scheme: light) {
 	body {
-		background: black;
-		color: white;
+		color: black;
+		background-color: white;
+	}
+
+	.container {
+		color: black;
+		background-color: #f0f0f0;
 	}
 }
-@media (prefers-color-scheme: light) {
+
+@media(prefers-color-scheme: dark) {
 	body {
-		background: white;
-		color: black;
+		color: white;
+		background-color: black;
+	}
+
+	.container {
+		color: white;
+		background-color: #202020;
+	}
+
+	.icon {
+		filter: invert(1);
 	}
 }

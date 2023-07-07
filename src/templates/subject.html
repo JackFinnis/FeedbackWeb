@@ -1,22 +1,52 @@
 <html>
   	<head>
     	<title>View Feedback</title>
-        <link rel="stylesheet" href="/../static/style.css">
+        <link rel="stylesheet" href="/static/style.css">
+		<style>
+			.logo {
+				width: 50;
+				height: 50;
+				margin-right: 15;
+				border-radius: 50%;
+			}
+		</style>
 	</head>
-	<body>
-		<h1>{{title}}</h1>
-		<a href="/send/{{public_id}}" target="_blank">Anonymous feedback link</a><br><br>
-		Make sure you save the <a href="/subject/{{private_id}}">url</a> of this page in a safe place so you can revisit it in future.
-		
-		<h2>Feedback</h2>
-		{% if feedbacks %}
-			<ul>
+	<body class="middle">
+		<div style="width: 600px;">
+			<div style="align-items: center; display: flex;">
+				<img class="logo" src="{{subject.photo_url}}">
+				<button class="button" onclick="copyFeedbackLink()" style="margin-left: auto; order: 3;">
+					<img id="copy_button_img" src="/static/copy.png" style="width: 25px; height: 25px; filter: invert(1);">
+					<p id="copy_button_label" style="display: inline; line-height: 25px; vertical-align: top;">Copy Link</p>
+				</button>
+				<h1 style="display: inline; line-height: 50px; vertical-align: top;">{{subject.title}}</h1>
+			</div><br>
+
+			{{subject.description}}<br><br>
+
+			<h2>Feedback</h2>
+			{% if feedbacks %}
 				{% for feedback in feedbacks %}
-					<li>{{feedback.feedback}} <a href="/delete_feedback/{{feedback.feedback_id}}/{{private_id}}">Delete</a></li>
+					<div class="container" style="vertical-align: top;">
+						{{feedback.feedback}}
+						<a style="float: right;" href="/delete_feedback/{{feedback.feedback_id}}/{{subject.private_id}}">
+							<img src="/static/trash.png" style="width: 20; height: 20;">
+						</a>
+						<p style="float: right; color: gray; display: inline; padding-right: 10px;">Tuesday</p>
+					</div>
 				{% endfor %}
-			</ul>
-		{% else %}
-		    No feedback yet
-		{% endif %}
+			{% else %}
+				No feedback yet
+			{% endif %}
+		</div>
 	</body>
+	<script>
+		function copyFeedbackLink() {
+			navigator.clipboard.writeText(window.location.origin + '/send/{{subject.public_id}}')
+			var image = document.getElementById('copy_button_img');
+			image.src = '/static/checkmark.png';
+			var label = document.getElementById('copy_button_label');
+			label.innerHTML = 'Link Copied';
+		}
+	</script>
 </html>
