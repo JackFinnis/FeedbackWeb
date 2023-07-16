@@ -1,38 +1,51 @@
 <html>
   	<head>
-    	<title>View Feedback</title>
+    	<title>View {{subject.title}} Feedback</title>
         <link rel="stylesheet" href="/static/style.css">
 		<style>
 			.logo {
-				width: 50;
-				height: 50;
-				margin-right: 15;
+				width: 100px;
+				height: 100px;
+				margin-right: 20px;
 				border-radius: 50%;
+				float: left;
 			}
 		</style>
 	</head>
-	<body class="middle">
-		<div style="width: 600px;">
-			<div style="align-items: center; display: flex;">
-				<img class="logo" src="{{subject.photo_url}}">
-				<button class="button" onclick="copyFeedbackLink()" style="margin-left: auto; order: 3;">
-					<img id="copy_button_img" src="/static/copy.png" style="width: 25px; height: 25px; filter: invert(1);">
-					<p id="copy_button_label" style="display: inline; line-height: 25px; vertical-align: top;">Copy Link</p>
-				</button>
-				<h1 style="display: inline; line-height: 50px; vertical-align: top;">{{subject.title}}</h1>
-			</div><br>
+	<body>
+		<div style="width:800px;">
+			<img class="logo" src="{{subject.photo_url}}">
+			<div style="height:100px; display:flex; align-items:center;">
+				<div>
+					<h1 style="margin-top:0px;">{{subject.title}}</h1>
+					<p>{{subject.description}}</p>
+				</div>
+			</div>
+			<br>
 
-			{{subject.description}}<br><br>
+			<button class="label" onclick="copyFeedbackLink()">
+				<img id="copy_button_img" class="symbol" src="/static/copy.png" >
+				<p id="copy_button_label" class="label-title">Copy Link</p>
+			</button>
+			<button class="label" onclick="editSubject()">
+				<img class="symbol" src="/static/pencil.png">
+				<p class="label-title">Edit Details</p>
+			</button>
+			<button class="label container-background" onclick="editSubject()">
+				<img class="icon" src="/static/trash.png">
+				<p class="label-title-destructive">Close Page</p>
+			</button>
 
+			<br><br>
 			<h2>Feedback</h2>
 			{% if feedbacks %}
 				{% for feedback in feedbacks %}
-					<div class="container" style="vertical-align: top;">
+					<div class="container" style="vertical-align:top;">
 						{{feedback.feedback}}
-						<a style="float: right;" href="/delete_feedback/{{feedback.feedback_id}}/{{subject.private_id}}">
-							<img src="/static/trash.png" style="width: 20; height: 20;">
+						<a style="float:right;" href="/delete_feedback/{{feedback.feedback_id}}/{{subject.private_id}}">
+							<img class="icon" src="/static/trash.png">
 						</a>
-						<p style="float: right; color: gray; display: inline; padding-right: 10px;">Tuesday</p>
+						<p style="float:right; color:var(--secondary); display:inline; padding-right:10px;">Tuesday</p>
 					</div>
 				{% endfor %}
 			{% else %}
@@ -42,11 +55,12 @@
 	</body>
 	<script>
 		function copyFeedbackLink() {
+			let image = document.getElementById('copy_button_img')
+			let label = document.getElementById('copy_button_label')
+
 			navigator.clipboard.writeText(window.location.origin + '/send/{{subject.public_id}}')
-			var image = document.getElementById('copy_button_img');
-			image.src = '/static/checkmark.png';
-			var label = document.getElementById('copy_button_label');
-			label.innerHTML = 'Link Copied';
+			image.src = '/static/success.png'
+			label.innerHTML = 'Link Copied'
 		}
 	</script>
 </html>

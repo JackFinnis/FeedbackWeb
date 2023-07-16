@@ -3,10 +3,23 @@ body {
 	display: flex;
 	justify-content: center;
 	--accent: #007AFF;
+	--red: #FF3B30;
+	--secondary: #8A8A8E;
+}
+
+.center {
+	align-items: center;
+	margin-bottom: 50px;
 }
 
 a {
 	color: var(--accent);
+	text-decoration: none;
+}
+
+button {
+	background: none;
+	border: none;
 }
 
 ol, ul, p {
@@ -30,9 +43,7 @@ textarea {
 }
 
 input[type=file] {
-	font-size: 1em;
-	margin: 0px;
-	padding: 0px;
+	display: none;
 }
 
 input[type=submit] {
@@ -40,42 +51,61 @@ input[type=submit] {
 	width: 400px;
 	padding: 12px;
 	margin-top: 20px;
-	margin-bottom: 50px;
 	font-size: 1em;
 	border-radius: 8px;
 	border: none;
 	color: white;
 	background-color: var(--accent);
-}
-input[type=submit]:active {
-	opacity: 0.8;
 }
 
 .container {
 	margin-top: 10px;
-	padding: 10px;
-	padding-left: 12px;
-	padding-bottom: 12px;
+	padding: 12px;
+	padding-top: 10px;
 	border-radius: 8px;
 	border: none;
 }
 
-.button {
-	background-color: var(--accent);
-	border: none;
+.icon, .symbol {
+	width: 20px;
+	height: 20px;
+}
+.symbol {
+	filter: invert(1);
+}
+.large-symbol {
+	width: 40px;
+	height: 40px;
+}
+
+.label {
 	color: white;
+	background-color: var(--accent);
+	font-size: 1em;
 	padding: 5px;
+	padding-top: 7px;
 	padding-left: 8px;
 	padding-right: 10px;
-	font-size: 1em;
+	border: none;
 	border-radius: 8px;
-}
-.button:active {
-	opacity: 0.8;
+	margin-right: 5px;
 }
 
-.center {
-	align-items: center;
+.label-title, .label-title-destructive {
+	display: inline-block;
+	line-height: 20px;
+	vertical-align: top;
+	margin-left: 2px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.label-title-destructive {
+	color: var(--red);
+}
+
+input[type=submit]:active, button:active, a:active, .label:active {
+	opacity: 0.75;
 }
 
 @media(prefers-color-scheme: light) {
@@ -84,7 +114,7 @@ input[type=submit]:active {
 		background-color: white;
 	}
 
-	.container {
+	.container, .container-background {
 		color: black;
 		background-color: #f0f0f0;
 	}
@@ -96,12 +126,12 @@ input[type=submit]:active {
 		background-color: black;
 	}
 
-	.container {
+	.container, .container-background {
 		color: white;
 		background-color: #202020;
 	}
-
-	.icon {
+	
+	.large-symbol {
 		filter: invert(1);
 	}
 }

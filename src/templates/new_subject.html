@@ -6,10 +6,11 @@
 	<body class="center">
 		<div>
 			<div style="text-align:center;">
-				<img class="icon" src="/static/logo.png" width="35" height="35">
+				<img class="large-symbol" src="/static/logo.png"><br>
 				<h1>Get Feedback</h1>
-				The easiest way to get anonymous feedback.
-			</div><br>
+				<p>The easiest way to get anonymous feedback.</p>
+			</div>
+			<br>
 			
 			<h2>How it works</h2>
 			<ol>
@@ -17,18 +18,69 @@
 				<li>Share the response link</li>
 				<li>Wait for responses</li>
 				<li>Browse your feedback</li>
-			</ol><br>
+			</ol>
+			<br>
 			
 			<h2>Setup a feedback page</h2>
 			<form action="new/submit" method="POST">
-				<input class="container" type="text" id="title" name="title" placeholder="* Title" required
-				oninvalid="setCustomValidity('Please enter the title of your feedback page')"
-				oninput="setCustomValidity('')"><br>
+				<input class="container" type="text" id="title" name="title" placeholder="* Title" required oninvalid="setCustomValidity('Please enter the title of your feedback page')" oninput="setCustomValidity('')"><br>
 				<textarea class="container" id="description" name="description" placeholder="Description"></textarea><br>
-				<h4 style="margin-top:15;">Company Logo</h4>
-				<input type="file" id="logo" name="logo" accept="image/*"><br>
+				<input type="file" id="logo" name="logo" accept="image/*">
+				<div style="margin-top:10px;">
+					<label id="upload-logo" for="logo" class="label" style="display:inline-block;">
+						<img class="symbol" src="/static/photo.png">
+						<p class="label-title">Upload Logo</p>
+					</label>
+					<p id="logo-empty" style="display:inline-block; padding-top:8px; vertical-align:top;">No logo selected</p>
+					
+					<button type="button" id="remove-logo" class="label container-background" onclick="removeLogo()">
+						<img class="icon" src="/static/trash.png">
+						<p class="label-title-destructive">Remove Logo</p>
+					</button>
+					<a class="label container-background" id="logo-preview" href="" target="_blank">
+						<img id="logo-preview-icon" class="icon" src="">
+						<p id="logo-preview-title" class="label-title" style="max-width:200px;"></p>
+					</a><br>
+				</div>
 				<input type="submit">
 			</form>
 		</div>
 	</body>
+	<script>
+		let logo = document.getElementById('logo')
+		let empty = document.getElementById('logo-empty')
+		let upload = document.getElementById('upload-logo')
+		let remove = document.getElementById('remove-logo')
+
+		let preview = document.getElementById('logo-preview')
+		let previewIcon = document.getElementById('logo-preview-icon')
+		let previewTitle = document.getElementById('logo-preview-title')
+
+		updateLogoStatus()
+		logo.addEventListener('input', updateLogoStatus)
+
+		function updateLogoStatus() {
+			if (logo.value === '') {
+				empty.style.display = 'inline-block'
+				upload.style.display = 'inline-block'
+				remove.style.display = 'none'
+				preview.style.display = 'none'
+			} else {
+				empty.style.display = 'none'
+				upload.style.display = 'none'
+				remove.style.display = 'inline-block'
+				preview.style.display = 'inline-block'
+
+				let url = URL.createObjectURL(logo.files[0])
+				preview.href = url
+				previewIcon.src = url
+				previewTitle.innerHTML = logo.value.split('\\').pop()
+			}
+		}
+
+		function removeLogo() {
+			logo.value = ''
+			updateLogoStatus()
+		}
+	</script>
 </html>
