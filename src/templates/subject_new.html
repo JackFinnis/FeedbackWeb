@@ -2,45 +2,48 @@
   	<head>
     	<title>Get Feedback</title>
         <link rel="stylesheet" href="/static/style.css">
+		<link rel="icon" href="/static/images/favicon.ico">
+		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
 	</head>
 	<body class="center">
 		<div>
 			<div style="text-align:center;">
-				<img class="large-symbol" src="/static/logo.png"><br>
-				<h1>Get Feedback</h1>
+				<img class="large-symbol" src="/static/images/bubble.right.png"><br>
+				<h1 style="margin-bottom:5px;">Get Feedback</h1>
 				<p>The easiest way to get anonymous feedback.</p>
 			</div>
 			<br>
 			
-			<h2>How it works</h2>
+			<h2 style="margin-bottom:10px;">How it works</h2>
 			<ol>
-				<li>Setup a feedback page</li>
+				<li>Start a feedback page</li>
+				<li>Save your private link</li>
 				<li>Share the response link</li>
 				<li>Wait for responses</li>
 				<li>Browse your feedback</li>
 			</ol>
 			<br>
 			
-			<h2>Setup a feedback page</h2>
-			<form action="new/submit" method="POST">
-				<input class="container" type="text" id="title" name="title" placeholder="* Title" required oninvalid="setCustomValidity('Please enter the title of your feedback page')" oninput="setCustomValidity('')"><br>
+			<h2>Start a feedback page</h2>
+			<form action="/new" method="POST" enctype="multipart/form-data">
+				<input class="container" type="text" id="title" name="title" placeholder="Title" required oninvalid="setCustomValidity('Please enter the title of your feedback page')" oninput="setCustomValidity('')"><br>
 				<textarea class="container" id="description" name="description" placeholder="Description"></textarea><br>
 				<input type="file" id="logo" name="logo" accept="image/*">
-				<div style="margin-top:10px;">
+				<div>
 					<label id="upload-logo" for="logo" class="label" style="display:inline-block;">
-						<img class="symbol" src="/static/photo.png">
+						<img class="symbol" src="/static/images/photo.png">
 						<p class="label-title">Upload Logo</p>
 					</label>
-					<p id="logo-empty" style="display:inline-block; padding-top:8px; vertical-align:top;">No logo selected</p>
+					<p id="logo-empty" style="display:inline-block; padding-top:8px; vertical-align:top; margin-top:10px;">No logo selected</p>
 					
-					<button type="button" id="remove-logo" class="label container-background" onclick="removeLogo()">
-						<img class="icon" src="/static/trash.png">
-						<p class="label-title-destructive">Remove Logo</p>
-					</button>
-					<a class="label container-background" id="logo-preview" href="" target="_blank">
+					<a class="label container-background" id="logo-preview" href="" target="_blank" style="margin-top:10px;">
 						<img id="logo-preview-icon" class="icon" src="">
 						<p id="logo-preview-title" class="label-title" style="max-width:200px;"></p>
-					</a><br>
+					</a>
+					<button type="button" id="remove-logo" class="label container-background" onclick="removeLogo()">
+						<img class="icon" src="/static/images/trash.png">
+						<p class="label-title-destructive">Remove Logo</p>
+					</button><br>
 				</div>
 				<input type="submit">
 			</form>
