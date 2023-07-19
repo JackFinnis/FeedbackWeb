@@ -1,0 +1,42 @@
+<html>
+  	<head>
+    	<title>Send {{subject.title}} Feedback</title>
+        <link rel="stylesheet" href="/static/style.css">
+		<link rel="icon" href="/static/images/favicon.ico">
+		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
+	</head>
+	<body class="center_horizontally center_vertically">
+		<div style="width:400px;">
+			<div style="text-align:center;">
+				{% if subject.photo_url %}
+					<img class="shadow feedback_form_logo" src="{{subject.photo_url}}">
+				{% endif %}
+					<h1>{{subject.title}}</h1>
+			</div><br>
+			<p style="text-align:justify;">{{subject.description}}</p>
+
+			{% if not subject.live %}
+				<div class="feedback_form_box container_background">
+					<div style="margin-bottom:20px;">
+						<img class="large_symbol" src="/static/images/nosign.png">
+						<h2 style="margin-bottom:10px;">Responses Closed</h2>
+						This page is not currently accepting feedback.
+					</div>
+				</div>
+			{% elif submitted %}
+				<div class="feedback_form_box container_background">
+					<div style="margin-bottom:20px;">
+						<img class="large_symbol" src="/static/images/checkmark.circle.png">
+						<h2 style="margin-bottom:10px;">Feedback Submitted</h2>
+						Thanks for your feedback!
+					</div>
+				</div>
+			{% else %}
+				<form style="height:180px;" action="/send/{{subject.public_id}}" method="POST">
+					<textarea class="container" id="feedback" name="feedback" autofocus=true placeholder="Feedback" required oninvalid="setCustomValidity('Please enter your feedback')" oninput="setCustomValidity('')"></textarea><br>
+					<input type="submit">
+				</form>
+			{% endif %}
+		</div>
+	</body>
+</html>

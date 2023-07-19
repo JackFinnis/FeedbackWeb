@@ -45,7 +45,7 @@ def root():
 
 @flask_app.route('/new')
 def subject_new():
-	return render_template('subject_new.html')
+	return render_template('new_subject.html')
 
 @flask_app.route('/new', methods=['POST'])
 def subject_new_submit():
@@ -105,7 +105,7 @@ def feedback_delete(private_id, feedback_id):
 def feedback_send(public_id):
 	subject = fetch_subject_public(public_id)
 	
-	return render_template('feedback_send.html', subject=subject)
+	return render_template('send_feedback.html', subject=subject, submitted=False)
 
 @flask_app.route('/send/<public_id>', methods=['POST'])
 def feedback_submit(public_id):
@@ -119,7 +119,7 @@ def feedback_submit(public_id):
 	feedback = Feedback(feedback, feedback_id, firestore.firestore.SERVER_TIMESTAMP)
 	subjects.document(public_id).collection('feedback').document(feedback_id).set(feedback.to_dict())
     
-	return render_template('feedback_submitted.html', public_id=public_id)
+	return render_template('send_feedback.html', subject=subject, submitted=True)
 
 @flask_app.errorhandler(404)
 def error_404(e):

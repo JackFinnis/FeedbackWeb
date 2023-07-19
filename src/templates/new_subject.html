@@ -1,0 +1,146 @@
+<html>
+  	<head>
+    	<title>Create Feedback Page</title>
+        <link rel="stylesheet" href="/static/style.css">
+		<link rel="icon" href="/static/images/favicon.ico">
+		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
+	</head>
+	<body>
+		<div style="display:flex; justify-content:center; align-items:center; height:120px;">
+			<div>
+				<img class="inline_logo" src="/static/images/logo.png">
+				<div style="height:80px; display:flex; align-items:center;">
+					<div style="margin-bottom:10px;">
+						<h1>Get Feedback</h1>
+						<p>The easiest way to get anonymous feedback</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div style="display:flex; justify-content:space-evenly;">
+			<div style="width:400px;">
+				<h2>How it works</h2>
+				<ol style="margin-top:10px;">
+					<li>Create a feedback page</li>
+					<li>Save your private feedback summary page link</li>
+					<li>Share the feedback page link with your customers</li>
+					<li>Recieve feedback from your customers</li>
+					<li>Browse the feedback on your private feedback summary page</li>
+				</ol>
+			</div>
+			<div style="width:400px;">
+				<h2>Create a Feedback Page</h2>
+				<form action="/new" method="POST" enctype="multipart/form-data">
+					<label class="field_label" for="title">Company Name</label>
+					<input class="container" type="text" id="title" name="title" placeholder="Apple" required oninvalid="setCustomValidity('Please enter your company\'s name')" oninput="setCustomValidity('')"><br>
+					<label class="field_label" for="description">Feedback Prompt</label>
+					<textarea class="container" id="description" name="description" placeholder="Please let us know how we could have improved our service today." required oninvalid="setCustomValidity('Please enter what you would like feedback on')" oninput="setCustomValidity('')"></textarea><br>
+					<input type="file" id="logo" name="logo" accept="image/*">
+					<div>
+						<label class="field_label" for="logo">Company Logo</label>
+						<label id="upload_logo_button" for="logo" class="label" style="display:inline-block;">
+							<img class="symbol" src="/static/images/photo.png">
+							<p class="label_title">Upload Logo</p>
+						</label>
+						<p id="logo_empty_label" style="display:inline-block; padding-top:8px; vertical-align:top;">No logo selected</p>
+						
+						<a class="label container_background" id="logo_preview_button" href="" target="_blank">
+							<img id="logo_preview_icon" class="icon" src="">
+							<p id="logo_preview_title" class="label_title" style="max-width:200px;"></p>
+						</a>
+						<button type="button" id="remove_logo_button" class="label container_background" onclick="removeLogo()">
+							<img class="icon" src="/static/images/trash.png">
+							<p class="label_title_destructive">Remove Logo</p>
+						</button><br>
+					</div>
+					<input class="large_button" type="submit" value="Create Feedback Page">
+				</form>
+			</div>
+			<div style="width:400px;">
+				<h2>Feedback Page Preview</h2>
+				<div style="text-align:center;">
+					<img id="page_preview_logo" class="shadow feedback_form_logo" src="">
+					<h1 id="page_preview_title"></h1>
+				</div>
+				<p id="page_preview_description" style="text-align:justify; margin:10px;"></p>
+				
+				<form>
+					<textarea class="container" placeholder="Enter Feedback"></textarea><br>
+					<input class="large_button" type="submit">
+				</form>
+			</div>
+		</div>
+	</body>
+	<script>
+		let logo = document.getElementById('logo')
+		let title = document.getElementById('title')
+		let description = document.getElementById('description')
+
+		let logo_empty_label = document.getElementById('logo_empty_label')
+		let upload_logo_button = document.getElementById('upload_logo_button')
+		let remove_logo_button = document.getElementById('remove_logo_button')
+
+		let logo_preview_button = document.getElementById('logo_preview_button')
+		let logo_preview_icon = document.getElementById('logo_preview_icon')
+		let logo_preview_title = document.getElementById('logo_preview_title')
+
+		let page_preview_logo = document.getElementById('page_preview_logo')
+		let page_preview_title = document.getElementById('page_preview_title')
+		let page_preview_description = document.getElementById('page_preview_description')
+
+		logo.addEventListener('input', update_logo)
+		title.addEventListener('input', update_title)
+		description.addEventListener('input', update_description)
+
+		update_logo()
+		update_title()
+		update_description()
+
+		function update_logo() {
+			if (logo.value == '') {
+				logo_empty_label.style.display = 'inline-block'
+				upload_logo_button.style.display = 'inline-block'
+				remove_logo_button.style.display = 'none'
+				logo_preview_button.style.display = 'none'
+				page_preview_logo.src = '/static/images/logo_placeholder.png'
+			} else {
+				logo_empty_label.style.display = 'none'
+				upload_logo_button.style.display = 'none'
+				remove_logo_button.style.display = 'inline-block'
+				logo_preview_button.style.display = 'inline-block'
+
+				let url = URL.createObjectURL(logo.files[0])
+				logo_preview_button.href = url
+				logo_preview_icon.src = url
+				page_preview_logo.src = url
+				logo_preview_title.innerHTML = logo.value.split('\\').pop()
+			}
+		}
+
+		function update_title() {
+			if (title.value == '') {
+				page_preview_title.innerHTML = 'Apple'
+				page_preview_title.style.color = 'var(--secondary)'
+			} else {
+				page_preview_title.innerHTML = title.value
+				page_preview_title.style.color = logo_empty_label.style.color
+			}
+		}
+
+		function update_description() {
+			if (description.value == '') {
+				page_preview_description.innerHTML = 'Please let us know how we could have improved our service today.'
+				page_preview_description.style.color = 'var(--secondary)'
+			} else {
+				page_preview_description.innerHTML = description.value
+				page_preview_description.style.color = logo_empty_label.style.color
+			}
+		}
+
+		function removeLogo() {
+			logo.value = ''
+			update_logo()
+		}
+	</script>
+</html>

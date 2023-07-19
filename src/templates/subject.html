@@ -4,53 +4,46 @@
         <link rel="stylesheet" href="/static/style.css">
 		<link rel="icon" href="/static/images/favicon.ico">
 		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
-		<style>
-			.logo {
-				width: 100px;
-				height: 100px;
-				margin-right: 20px;
-				border-radius: 50%;
-				float: left;
-			}
-		</style>
 	</head>
-	<body>
+	<body class="center_horizontally">
 		<div style="width:800px;">
-			<div style="margin-top:10px; margin-bottom:10px;">
+			<div style="margin-bottom:20px; align-items:center; display:flex;">
 				{% if subject.photo_url %}
-				<img class="logo shadow" src="{{subject.photo_url}}">
-				<div style="min-height:100px; display:flex; align-items:center;">
+				<img class="inline_logo" src="{{subject.photo_url}}">
+				<button class="label container_background" style="order:3; margin-left:auto;" onclick="confirmDeleteSubject()">
+					<img class="icon" src="/static/images/trash.png">
+					<p class="label_title_destructive">Close Page</p>
+				</button>
+				<div style="line-height:80px;">
 				{% else %}
-				<div style="display:flex; align-items:center;">
+				<div>
 				{% endif %}
-					<div>
-						<h1 style="margin-bottom:10px;">{{subject.title}}</h1>
-						<p>{{subject.description}}</p>
-					</div>
+					<h1 style="margin:0px;">{{subject.title}}</h1>
 				</div>
 			</div>
 
+			<h2>Manage Feedback Page</h2>
+			<a class="label" target="_blank" href="/send/{{subject.public_id}}">
+				<img class="symbol" src="/static/images/square.and.arrow.up.right.png" >
+				<p class="label_title">View Feedback Page</p>
+			</a>
 			<button class="label" id="copy_button" onclick="copyFeedbackLink()">
 				<img id="copy_button_img" class="symbol" src="/static/images/doc.on.doc.png">
-				<p id="copy_button_label" class="label-title">Copy Link</p>
+				<p id="copy_button_label" class="label-title">Copy Feedback Link</p>
 			</button>
 			<a class="label" target="_blank" href="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={{url_for('feedback_send', public_id=subject.public_id, _external=True)}}">
 				<img class="symbol" src="/static/images/qrcode.png" >
-				<p class="label-title">QR Code</p>
+				<p class="label-title">View Feedback QR Code</p>
 			</a>
 			<a class="label" href="/subject/{{subject.private_id}}/toggle_live">
 				{% if subject.live %}
 				<img class="symbol" src="/static/images/pause.fill.png">
-				<p class="label-title">Pause Responses</p>
+				<p class="label_title">Disable Feedback Page</p>
 				{% else %}
 				<img class="symbol" src="/static/images/play.fill.png">
-				<p class="label-title">Allow Responses</p>
+				<p class="label_title">Enable Feedback Page</p>
 				{% endif %}
 			</a>
-			<button class="label container-background" onclick="confirmDeleteSubject()">
-				<img class="icon" src="/static/images/trash.png">
-				<p class="label-title-destructive">Close Page</p>
-			</button>
 
 			<br><br>
 			{% if feedbacks %}
@@ -75,19 +68,19 @@
 		</div>
 	</body>
 	<script>
-		if ('{{subject.shown_save_alert}}' === 'False') {
-			alert('Please now save the URL of your feedback page so you can return to it in future.\n\n{{url_for("subject", private_id=subject.private_id, _external=True)}}')
+		if ('{{subject.shown_save_alert}}' == 'False') {
+			alert('Please now save the URL of your private feedback summary page so you can view your feedback in future.\n\n{{url_for("subject", private_id=subject.private_id, _external=True)}}')
 		}
 
 		function copyFeedbackLink() {
-			let button = document.getElementById('copy_button')
-			let image = document.getElementById('copy_button_img')
-			let label = document.getElementById('copy_button_label')
+			let copyButton = document.getElementById('copy_button')
+			let copyButtonImage = document.getElementById('copy_button_img')
+			let copyButtonLabel = document.getElementById('copy_button_label')
 
 			navigator.clipboard.writeText('{{url_for("feedback_send", public_id=subject.public_id, _external=True)}}')
-			image.src = '/static/images/checkmark.circle.fill.png'
-			label.innerHTML = 'Link Copied'
-			button.style.opacity = 0.75
+			copyButton.style.opacity = 0.75
+			copyButtonImage.src = '/static/images/checkmark.circle.fill.png'
+			copyButtonLabel.innerHTML = 'Link Copied'
 		}
 
 		function confirmDeleteSubject() {
