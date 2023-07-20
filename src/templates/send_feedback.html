@@ -47,7 +47,7 @@
 				</div>
 			{% else %}
 				<form action="/send/{{subject.public_id}}" method="POST">
-					<textarea class="feedback_form_textarea container" id="feedback" name="feedback" placeholder="Enter feedback" autofocus required oninvalid="setCustomValidity('Please enter your feedback')" oninput="setCustomValidity('')"></textarea>
+					<textarea class="feedback_form_textarea container" id="feedback" name="feedback" placeholder="Enter your feedback" autofocus required oninvalid="setCustomValidity('Please enter your feedback')" oninput="setCustomValidity('')"></textarea>
 					<button class="large_button">Submit Feedback</button>
 				</form>
 			{% endif %}

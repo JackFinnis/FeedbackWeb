@@ -32,7 +32,7 @@
 				</a>
 				<a class="label" target="_blank" href="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={{url_for('feedback_send', public_id=subject.public_id, _external=True)}}">
 					<img class="symbol" src="/static/images/qrcode.png" >
-					<p class="label_title">View Feedback QR Code</p>
+					<p class="label_title">View Feedback Page QR Code</p>
 				</a>
 				<a class="label" href="/{{subject.private_id}}/toggle_live">
 					{% if subject.live %}
@@ -45,7 +45,7 @@
 				</a>
 				<button class="label" id="copy_button" onclick="copy_feedback_link()">
 					<img id="copy_button_image" class="symbol" src="/static/images/doc.on.doc.png">
-					<p id="copy_button_label" class="label_title">Copy Feedback Link</p>
+					<p id="copy_button_label" class="label_title">Copy Feedback Page Link</p>
 				</button>
 			</div>
 

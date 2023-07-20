@@ -15,6 +15,10 @@
 				padding: 10px 0px;
 			}
 
+			#title:focus::placeholder {
+				color: transparent;
+			}
+
 			#description {
 				text-align: justify;
 				padding: 10px;
@@ -22,30 +26,28 @@
 				width: calc(100% - 20px);
 				outline: none;
 			}
-
-			textarea:focus::placeholder {
-				color: transparent;
-			}
 		</style>
 	</head>
 	<body class="center_vertically center_horizontally">
 		<div style="max-width:400px;">
 			<p style="height:0; overflow:hidden;">--------------------------------------------------------------------------------------</p>
 
-			<h1 style="text-align:center; padding-bottom:30px;">Create a Feedback Page</h1>
+			<h1 style="text-align:center; padding-bottom:20px;">Create a Feedback Page</h1>
 			<form action="/create" method="POST" enctype="multipart/form-data">
-				<div style="text-align:center;">
-					<label for="logo">
-						<input type="file" id="logo" name="logo" accept="image/*" required oninvalid="setCustomValidity('Please upload a page logo')" oninput="setCustomValidity('')">
-						<img class="feedback_form_logo shadow" id="logo_preview" src="/static/images/logo_placeholder.png">
-					</label>
+				<div class="background shadow" style="padding:20px; border-radius:30px;">
+					<div style="text-align:center;">
+						<label for="logo">
+							<input type="file" id="logo" name="logo" accept="image/*" required oninvalid="setCustomValidity('Please select a page logo')" oninput="setCustomValidity('')">
+							<img class="feedback_form_logo shadow" id="logo_preview" src="/static/images/logo_placeholder.png">
+						</label>
+					</div>
+					<textarea rows="1" id="title" name="title" placeholder="Title" required oninvalid="setCustomValidity('Please enter a page title')" oninput="setCustomValidity('')"></textarea>
+					<textarea rows="1" id="description" name="description" placeholder="What would you like feedback on?" required oninvalid="setCustomValidity('Please describe what you would like feedback on')" oninput="setCustomValidity('')"></textarea>
+					<textarea class="feedback_form_textarea container" placeholder="Enter your feedback" disabled></textarea>
+	
+					<button class="large_button" style="background-color:var(--secondary);" disabled>Submit Feedback</button>
 				</div>
-				<textarea rows="1" id="title" name="title" placeholder="Title" required oninvalid="setCustomValidity('Please enter a page title')" oninput="setCustomValidity('')"></textarea>
-				<textarea rows="1" id="description" name="description" placeholder="What would you like feedback on?" required oninvalid="setCustomValidity('Please describe what you would like feedback on')" oninput="setCustomValidity('')"></textarea>
-				<textarea class="feedback_form_textarea container" placeholder="Enter feedback" disabled></textarea>
-
-				<button class="large_button" style="background-color:var(--secondary);" disabled>Submit Feedback</button>
-				<button class="large_button" style="margin-top:30px;">Create Feedback Page</button>
+				<button class="large_button" style="margin-top:25px;">Create Feedback Page</button>
 			</form>
 		</div>
 	</body>

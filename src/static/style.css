@@ -164,7 +164,7 @@ input[type=file] {
 		color: black;
 	}
 
-	body {
+	body, .background {
 		background-color: white;
 	}
 
@@ -182,7 +182,7 @@ input[type=file] {
 		color: white;
 	}
 
-	body {
+	body, .background {
 		background-color: black;
 	}
 
