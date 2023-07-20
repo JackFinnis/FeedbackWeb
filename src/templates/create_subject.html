@@ -4,20 +4,22 @@
         <link rel="stylesheet" href="/static/style.css">
 		<link rel="icon" href="/static/images/favicon.ico">
 		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
+        <meta name="viewport" content="width=device-width">
 		<style>
 			#title {
 				text-align: center;
-				font-size: 2em;
+				font-size: 2rem;
 				font-weight: bolder;
 				outline: none;
-				width: 380px;
-				margin: 10px;
+				width: 100%;
+				padding: 10px 0px;
 			}
 
 			#description {
 				text-align: justify;
-				margin: 10px;
-				width: 380px;
+				padding: 10px;
+				padding-left: 12px;
+				width: calc(100% - 20px);
 				outline: none;
 			}
 
@@ -27,23 +29,23 @@
 		</style>
 	</head>
 	<body class="center_vertically center_horizontally">
-		<div style="width:400px;">
+		<div style="max-width:400px;">
+			<p style="height:0; overflow:hidden;">--------------------------------------------------------------------------------------</p>
+
 			<h1 style="text-align:center; padding-bottom:30px;">Create a Feedback Page</h1>
 			<form action="/create" method="POST" enctype="multipart/form-data">
 				<div style="text-align:center;">
-					<div>
-						<input type="file" id="logo" name="logo" accept="image/*" required oninvalid="setCustomValidity('Please upload your company\'s logo')" oninput="setCustomValidity('')">
-						<label for="logo">
-							<img class="feedback_form_logo shadow" id="logo_preview" src="/static/images/logo_placeholder.png">
-						</label>
-					</div>
-
-					<textarea rows="1" type="text" id="title" name="title" placeholder="Company Name" required oninvalid="setCustomValidity('Please enter your company\'s name')" oninput="setCustomValidity('')"></textarea><br>
+					<label for="logo">
+						<input type="file" id="logo" name="logo" accept="image/*" required oninvalid="setCustomValidity('Please upload a page logo')" oninput="setCustomValidity('')">
+						<img class="feedback_form_logo shadow" id="logo_preview" src="/static/images/logo_placeholder.png">
+					</label>
 				</div>
-				<textarea rows="1" id="description" name="description" placeholder="Let us know what we could have improved." required oninvalid="setCustomValidity('Please enter what you would like feedback on')" oninput="setCustomValidity('')"></textarea><br>
-				
-				<textarea class="feedback_form_field container" placeholder="Enter feedback" disabled></textarea><br>
-				<input type="submit" class="large_button" value="Create Feedback Page">
+				<textarea rows="1" id="title" name="title" placeholder="Title" required oninvalid="setCustomValidity('Please enter a page title')" oninput="setCustomValidity('')"></textarea>
+				<textarea rows="1" id="description" name="description" placeholder="What would you like feedback on?" required oninvalid="setCustomValidity('Please describe what you would like feedback on')" oninput="setCustomValidity('')"></textarea>
+				<textarea class="feedback_form_textarea container" placeholder="Enter feedback" disabled></textarea>
+
+				<button class="large_button" style="background-color:var(--secondary);" disabled>Submit Feedback</button>
+				<button class="large_button" style="margin-top:30px;">Create Feedback Page</button>
 			</form>
 		</div>
 	</body>

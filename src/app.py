@@ -16,6 +16,9 @@ db = firestore.client()
 subjects = db.collection('subject')
 
 # Helper Functions
+def get_id():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+
 def upload_file(file, id):
 	ref = bucket.blob(id)
 	ref.upload_from_file(file)
@@ -32,9 +35,6 @@ def fetch_subject_public(public_id):
 	doc = subjects.document(public_id).get()
 	if not doc.exists: abort(404); return
 	return Subject.from_dict(doc.to_dict())
-
-def get_id():
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
 
 # Configure Flask routing
 flask_app = Flask(__name__)
@@ -64,7 +64,7 @@ def subject_new_submit():
 	
 	return render_template('subject_created.html', private_id=private_id)
 
-@flask_app.route('/company/<private_id>')
+@flask_app.route('/<private_id>')
 def subject(private_id):
 	subject = fetch_subject_private(private_id)
 	docs = subjects.document(subject.public_id).collection('feedback').order_by('timestamp', direction=firestore.firestore.Query.DESCENDING).get()
@@ -72,29 +72,20 @@ def subject(private_id):
 
 	return render_template('subject.html', feedbacks=feedbacks, subject=subject)
 
-@flask_app.route('/company/<private_id>/delete')
-def subject_delete(private_id):
-	subject = fetch_subject_private(private_id)
-	subjects.document(subject.public_id).delete()
-	if subject.photo_url:
-		bucket.blob(subject.public_id).delete()
-
-	return render_template('subject_deleted.html')
-
-@flask_app.route('/company/<private_id>/toggle_live')
+@flask_app.route('/<private_id>/toggle_live')
 def subject_toggle_live(private_id):
 	subject = fetch_subject_private(private_id)
 	subject.live = not subject.live
 	subjects.document(subject.public_id).set(subject.to_dict())
 
-	return redirect(f'/company/{private_id}')
+	return redirect(f'/{private_id}')
 
-@flask_app.route('/company/<private_id>/feedback/<feedback_id>/delete')
+@flask_app.route('/<private_id>/feedback/<feedback_id>/delete')
 def feedback_delete(private_id, feedback_id):
 	subject = fetch_subject_private(private_id)
 	subjects.document(subject.public_id).collection('feedback').document(feedback_id).delete()
 
-	return redirect(f'/company/{private_id}')
+	return redirect(f'/{private_id}')
 
 @flask_app.route('/send/<public_id>')
 def feedback_send(public_id):

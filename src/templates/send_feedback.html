@@ -4,26 +4,31 @@
         <link rel="stylesheet" href="/static/style.css">
 		<link rel="icon" href="/static/images/favicon.ico">
 		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
+        <meta name="viewport" content="width=device-width">
 		<style>
 			.feedback_form_box {
-				height: 180px; 
-				display: flex; 
+				width: calc(100% - 20px);
+				height: 160px;
+				padding: 10px;
+				display: flex;
 				text-align: center; 
 				justify-content: center;
 				align-items: center;
 			}
 		</style>
 	</head>
-	<body class="center_horizontally center_vertically">
-		<div style="width:400px;">
+	<body class="center_vertically center_horizontally">
+		<div style="max-width:400px;">
+			<p style="height:0; overflow:hidden;">--------------------------------------------------------------------------------------</p>
+
 			<div style="text-align:center;">
 				{% if subject.photo_url %}
 					<img class="shadow feedback_form_logo" src="{{subject.photo_url}}">
 				{% endif %}
 				<h1>{{subject.title}}</h1>
 			</div>
-			<p style="text-align:justify; padding:10px;">{{subject.description}}</p>
-
+			<p style="text-align:justify; padding:12px; padding-top:10px;">{{subject.description}}</p>
+			
 			{% if not subject.live %}
 				<div class="feedback_form_box container_background">
 					<div style="margin-bottom:10px;">
@@ -41,9 +46,9 @@
 					</div>
 				</div>
 			{% else %}
-				<form style="height:180px;" action="/send/{{subject.public_id}}" method="POST">
-					<textarea class="feedback_form_field container" id="feedback" name="feedback" autofocus=true placeholder="Enter feedback" required oninvalid="setCustomValidity('Please enter your feedback')" oninput="setCustomValidity('')"></textarea><br>
-					<input class="large_button" type="submit">
+				<form action="/send/{{subject.public_id}}" method="POST">
+					<textarea class="feedback_form_textarea container" id="feedback" name="feedback" placeholder="Enter feedback" autofocus required oninvalid="setCustomValidity('Please enter your feedback')" oninput="setCustomValidity('')"></textarea>
+					<button class="large_button">Submit Feedback</button>
 				</form>
 			{% endif %}
 		</div>

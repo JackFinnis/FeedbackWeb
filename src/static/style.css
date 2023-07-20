@@ -5,49 +5,75 @@ html {
 	--secondary: #8A8A8E;
 }
 
-body {
-	padding: 10px;
-	padding-bottom: 50px;
-}
-
-ol, ul, p, h1, h2, form, textarea, a, button {
+ol, ul, p, h1, h2, form, textarea, a, button, body {
 	margin: 0px;
+	padding: 0px;
 }
 
-textarea {
-	padding: 0px;
+img {
+	object-fit: cover;
+}
+
+body {
+	margin: 20px;
+	margin-bottom: 50px;
+}
+
+ol {
+	counter-reset: item;
+	padding-left: 40px;
+}
+
+li {
+	display: block;
+	counter-increment: item;
+	position: relative;
+	height: 45px;
+	display: flex;
+	align-items: center;
+}
+
+li::before {
+	display: inline-block;
+	text-align: center;
+	content: counter(item);
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
+	font-weight: 500;
+	border-radius: 50%;
+	border-width: 2px;
+	border-style: solid;
+	position: absolute;
+	left: -40px;
 }
 
 a, button {
 	display: inline-block;
 	color: var(--accent);
 	text-decoration: none;
-	background: none;
-	border: none;
-	font-size: 1em;
 	font-weight: 500;
+	font-size: 1rem;
 }
 
-input[type=submit], input[type=text], textarea {
+input[type=submit], textarea, a, button {
 	border: none;
-	font-size: 1em;
-}
-
-input[type=text], textarea {
 	background: none;
+	font-size: 1rem;
 }
 
-li {
-	padding-bottom: 5px;
+textarea {
+	display: block;
+	resize: none;
+	width: 100%;
 }
 
 h1 {
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding: 10px 0px;
 }
 
 h2 {
-	padding: 10px;
+	padding: 10px 12px;
 }
 
 .center_horizontally {
@@ -59,27 +85,23 @@ h2 {
 	align-items: center;
 }
 
-textarea {
-	resize: none;
-}
-
 .container, .label, .container_background, .large_button {
 	border-radius: 10px;
 }
 
 .large_button {
-	text-align: center;
-	padding-top: 10px;
-	padding-bottom: 12px;
-	width: 400px;
-	margin-top: 20px;
 	color: white;
 	background-color: var(--accent);
+	text-align: center;
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 12px;
+	margin-top: 20px;
 }
 
 .container {
-	padding: 10px;
-	padding-bottom: 12px;
+	padding: 12px;
+	padding-top: 10px;
 }
 
 .icon, .symbol {
@@ -98,32 +120,26 @@ textarea {
 
 .label {
 	color: white;
-	font-size: 1em;
 	background-color: var(--accent);
 	padding-top: 7px;
 	padding-bottom: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	margin-right: 5px;
+	margin-right: 10px;
+	margin-bottom: 10px;
 }
 
-.label_title, .label_title_destructive {
+.label_title {
 	display: inline-block;
-	line-height: 20px;
 	vertical-align: top;
+	line-height: 20px;
 	margin-left: 3px;
+	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis;
 }
 
-.label_title_destructive {
-	color: var(--red);
-}
-
-button:active, a:active, .large_button:active {
+button:active:enabled, a:active, label[for]:active {
 	opacity: 0.75;
 }
 
@@ -138,13 +154,13 @@ input[type=file] {
 	opacity: 0;
 }
 
-.feedback_form_field {
-	width: 400px;
-	height: 100px;
+.feedback_form_textarea {
+	height: 120px;
+	width: 100%;
 }
 
 @media(prefers-color-scheme: light) {
-	body, .container, .container_background, textarea, input[type=text] {
+	body, .container, .container_background, textarea {
 		color: black;
 	}
 
@@ -162,7 +178,7 @@ input[type=file] {
 }
 
 @media(prefers-color-scheme: dark) {
-	body, .container, .container_background, textarea, input[type=text] {
+	body, .container, .container_background, textarea {
 		color: white;
 	}
 
