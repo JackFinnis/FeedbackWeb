@@ -1,16 +1,25 @@
 <html>
   	<head>
-    	<title>{{subject.title}} Feedback</title>
+    	<title>{{subject.title}} Feedback Summary</title>
         <link rel="stylesheet" href="/static/style.css">
 		<link rel="icon" href="/static/images/favicon.ico">
 		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
+		<style>
+			.logo {
+				width: 80px;
+				height: 80px;
+				margin-right: 20px;
+				border-radius: 50%;
+				float: left;
+			}
+		</style>
 	</head>
 	<body class="center_horizontally">
 		<div style="width:800px;">
-			<div style="margin-bottom:20px; align-items:center; display:flex;">
+			<div style="align-items:center; display:flex;">
 				{% if subject.photo_url %}
-				<img class="inline_logo" src="{{subject.photo_url}}">
-				<button class="label container_background" style="order:3; margin-left:auto;" onclick="confirmDeleteSubject()">
+				<img class="logo shadow" src="{{subject.photo_url}}">
+				<button class="label container_background" style="order:3; margin-left:auto;" onclick="confirm_delete_subject()">
 					<img class="icon" src="/static/images/trash.png">
 					<p class="label_title_destructive">Close Page</p>
 				</button>
@@ -18,7 +27,7 @@
 				{% else %}
 				<div>
 				{% endif %}
-					<h1 style="margin:0px;">{{subject.title}}</h1>
+					<h1>{{subject.title}}</h1>
 				</div>
 			</div>
 
@@ -27,15 +36,15 @@
 				<img class="symbol" src="/static/images/square.and.arrow.up.right.png" >
 				<p class="label_title">View Feedback Page</p>
 			</a>
-			<button class="label" id="copy_button" onclick="copyFeedbackLink()">
-				<img id="copy_button_img" class="symbol" src="/static/images/doc.on.doc.png">
-				<p id="copy_button_label" class="label-title">Copy Feedback Link</p>
+			<button class="label" id="copy_button" onclick="copy_feedback_link()">
+				<img id="copy_button_image" class="symbol" src="/static/images/doc.on.doc.png">
+				<p id="copy_button_label" class="label_title">Copy Feedback Link</p>
 			</button>
 			<a class="label" target="_blank" href="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={{url_for('feedback_send', public_id=subject.public_id, _external=True)}}">
 				<img class="symbol" src="/static/images/qrcode.png" >
-				<p class="label-title">View Feedback QR Code</p>
+				<p class="label_title">View Feedback QR Code</p>
 			</a>
-			<a class="label" href="/subject/{{subject.private_id}}/toggle_live">
+			<a class="label" href="/company/{{subject.private_id}}/toggle_live">
 				{% if subject.live %}
 				<img class="symbol" src="/static/images/pause.fill.png">
 				<p class="label_title">Disable Feedback Page</p>
@@ -45,17 +54,16 @@
 				{% endif %}
 			</a>
 
-			<br><br>
 			{% if feedbacks %}
 				<div>
 					<h2 style="display:inline-block;">Feedback</h2>
 					<h2 style="float:right; color:var(--secondary); font-weight:normal;">{{feedbacks|count}}</h2>
 				</div>
 				{% for feedback in feedbacks %}
-					<div class="container">
+					<div class="container" style="margin-bottom:10px;">
 						<div style="float:right; margin-left:10px;">
 							<p style="color:var(--secondary); padding-right:5px; display:inline-block; line-height:20px; vertical-align:top;">{{feedback.get_formatted_timestamp()}}</p>
-							<a href="/subject/{{subject.private_id}}/feedback/{{feedback.feedback_id}}/delete">
+							<a href="/company/{{subject.private_id}}/feedback/{{feedback.feedback_id}}/delete">
 								<img class="icon" src="/static/images/trash.png">
 							</a>
 						</div>
@@ -68,25 +76,21 @@
 		</div>
 	</body>
 	<script>
-		if ('{{subject.shown_save_alert}}' == 'False') {
-			alert('Please now save the URL of your private feedback summary page so you can view your feedback in future.\n\n{{url_for("subject", private_id=subject.private_id, _external=True)}}')
-		}
-
-		function copyFeedbackLink() {
-			let copyButton = document.getElementById('copy_button')
-			let copyButtonImage = document.getElementById('copy_button_img')
-			let copyButtonLabel = document.getElementById('copy_button_label')
+		function copy_feedback_link() {
+			let copy_button = document.getElementById('copy_button')
+			let copy_button_img = document.getElementById('copy_button_image')
+			let copy_button_label = document.getElementById('copy_button_label')
 
 			navigator.clipboard.writeText('{{url_for("feedback_send", public_id=subject.public_id, _external=True)}}')
-			copyButton.style.opacity = 0.75
-			copyButtonImage.src = '/static/images/checkmark.circle.fill.png'
-			copyButtonLabel.innerHTML = 'Link Copied'
+			copy_button.style.opacity = 0.75
+			copy_button_img.src = '/static/images/checkmark.circle.fill.png'
+			copy_button_label.innerHTML = 'Link Copied'
 		}
 
-		function confirmDeleteSubject() {
+		function confirm_delete_subject() {
 			let result = confirm("Are you sure you want to delete this feedback page? All existing feedback will be deleted and people will no longer be able to submit feedback. This action cannot be undone.")
 			if (result) {
-				location.href = '/subject/{{subject.private_id}}/delete'
+				location.href = '/company/{{subject.private_id}}/delete'
 			}
 		}
 	</script>

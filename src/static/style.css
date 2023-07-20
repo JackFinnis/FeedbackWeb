@@ -7,7 +7,47 @@ html {
 
 body {
 	padding: 10px;
-	margin-bottom: 50px;
+	padding-bottom: 50px;
+}
+
+ol, ul, p, h1, h2, form, textarea, a, button {
+	margin: 0px;
+}
+
+textarea {
+	padding: 0px;
+}
+
+a, button {
+	display: inline-block;
+	color: var(--accent);
+	text-decoration: none;
+	background: none;
+	border: none;
+	font-size: 1em;
+	font-weight: 500;
+}
+
+input[type=submit], input[type=text], textarea {
+	border: none;
+	font-size: 1em;
+}
+
+input[type=text], textarea {
+	background: none;
+}
+
+li {
+	padding-bottom: 5px;
+}
+
+h1 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+h2 {
+	padding: 10px;
 }
 
 .center_horizontally {
@@ -19,77 +59,27 @@ body {
 	align-items: center;
 }
 
-a, button {
-	display: inline-block;
-	color: var(--accent);
-	text-decoration: none;
-	background: none;
-	border: none;
-	padding: 0px;
-}
-
-ol, ul, p, h1, h2, form {
-	margin: 0px;
-}
-
-li {
-	margin-bottom: 5px;
-}
-
-h1 {
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-
-h2 {
-	margin: 10px;
-}
-
-input[type=text], textarea {
-	appearance: none;
-	font-size: 1em;
-	width: 400px;
-}
-
 textarea {
 	resize: none;
-	height: 100px;
-}
-
-input[type=file] {
-	display: none;
 }
 
 .container, .label, .container_background, .large_button {
 	border-radius: 10px;
-	border: none;
 }
 
 .large_button {
 	text-align: center;
-	appearance: none;
 	padding-top: 10px;
 	padding-bottom: 12px;
 	width: 400px;
 	margin-top: 20px;
 	color: white;
 	background-color: var(--accent);
-	font-size: 1em;
-}
-
-.label, .large_button {
-	font-weight: 500;
 }
 
 .container {
 	padding: 10px;
 	padding-bottom: 12px;
-}
-
-.field_label {
-	margin: 10px;
-	font-weight: bold;
-	display: block;
 }
 
 .icon, .symbol {
@@ -114,6 +104,8 @@ input[type=file] {
 	padding-bottom: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 	margin-right: 5px;
 }
 
@@ -135,54 +127,50 @@ button:active, a:active, .large_button:active {
 	opacity: 0.75;
 }
 
-.feedback_form_logo {
+.feedback_form_logo, input[type=file] {
 	width: 130px;
 	height: 130px;
 	border-radius: 50%;
 }
 
-.feedback_form_box {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	height: 160px; 
-	display: flex; 
-	text-align: center; 
-	justify-content: center;
-	align-items: center;
+input[type=file] {
+	position: absolute;
+	opacity: 0;
 }
 
-.inline_logo {
-	width: 80px;
-	height: 80px;
-	margin-right: 20px;
-	border-radius: 50%;
-	float: left;
+.feedback_form_field {
+	width: 400px;
+	height: 100px;
 }
 
 @media(prefers-color-scheme: light) {
-	body {
+	body, .container, .container_background, textarea, input[type=text] {
 		color: black;
+	}
+
+	body {
 		background-color: white;
 	}
 
 	.container, .container_background {
-		color: black;
 		background-color: #f0f0f0;
 	}
 
-	.shadow, .inline_logo {
+	.shadow {
 		box-shadow: 0px 5px 10px lightgray;
 	}
 }
 
 @media(prefers-color-scheme: dark) {
-	body {
+	body, .container, .container_background, textarea, input[type=text] {
 		color: white;
+	}
+
+	body {
 		background-color: black;
 	}
 
 	.container, .container_background {
-		color: white;
 		background-color: #202020;
 	}
 	
@@ -190,7 +178,7 @@ button:active, a:active, .large_button:active {
 		filter: invert(1);
 	}
 
-	.shadow, .inline_logo {
+	.shadow {
 		box-shadow: 0px 5px 10px dimgray;
 	}
 }

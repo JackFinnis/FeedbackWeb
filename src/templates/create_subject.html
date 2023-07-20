@@ -1,0 +1,69 @@
+<html>
+  	<head>
+    	<title>Create Feedback Page</title>
+        <link rel="stylesheet" href="/static/style.css">
+		<link rel="icon" href="/static/images/favicon.ico">
+		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
+		<style>
+			#title {
+				text-align: center;
+				font-size: 2em;
+				font-weight: bolder;
+				outline: none;
+				width: 380px;
+				margin: 10px;
+			}
+
+			#description {
+				text-align: justify;
+				margin: 10px;
+				width: 380px;
+				outline: none;
+			}
+
+			textarea:focus::placeholder {
+				color: transparent;
+			}
+		</style>
+	</head>
+	<body class="center_vertically center_horizontally">
+		<div style="width:400px;">
+			<h1 style="text-align:center; padding-bottom:30px;">Create a Feedback Page</h1>
+			<form action="/create" method="POST" enctype="multipart/form-data">
+				<div style="text-align:center;">
+					<div>
+						<input type="file" id="logo" name="logo" accept="image/*" required oninvalid="setCustomValidity('Please upload your company\'s logo')" oninput="setCustomValidity('')">
+						<label for="logo">
+							<img class="feedback_form_logo shadow" id="logo_preview" src="/static/images/logo_placeholder.png">
+						</label>
+					</div>
+
+					<textarea rows="1" type="text" id="title" name="title" placeholder="Company Name" required oninvalid="setCustomValidity('Please enter your company\'s name')" oninput="setCustomValidity('')"></textarea><br>
+				</div>
+				<textarea rows="1" id="description" name="description" placeholder="Let us know what we could have improved." required oninvalid="setCustomValidity('Please enter what you would like feedback on')" oninput="setCustomValidity('')"></textarea><br>
+				
+				<textarea class="feedback_form_field container" placeholder="Enter feedback" disabled></textarea><br>
+				<input type="submit" class="large_button" value="Create Feedback Page">
+			</form>
+		</div>
+	</body>
+	<script>
+		let logo = document.getElementById('logo')
+		let logo_preview = document.getElementById('logo_preview')
+		let title = document.getElementById('title')
+		let description = document.getElementById('description')
+
+		logo.addEventListener('input', update_logo)
+		title.addEventListener('input', update_height)
+		description.addEventListener('input', update_height)
+
+		function update_logo() {
+			logo_preview.src = URL.createObjectURL(logo.files[0])
+		}
+
+		function update_height() {
+			this.style.height = 'auto'
+            this.style.height = this.scrollHeight + 'px'
+		}
+	</script>
+</html>

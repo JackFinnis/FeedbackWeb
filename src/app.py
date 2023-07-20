@@ -41,13 +41,13 @@ flask_app = Flask(__name__)
 
 @flask_app.route('/')
 def root():
-	return redirect('/new')
+	return render_template('how_it_works.html')
 
-@flask_app.route('/new')
+@flask_app.route('/create')
 def subject_new():
-	return render_template('new_subject.html')
+	return render_template('create_subject.html')
 
-@flask_app.route('/new', methods=['POST'])
+@flask_app.route('/create', methods=['POST'])
 def subject_new_submit():
 	title = request.form['title']
 	description = request.form['description']
@@ -59,25 +59,20 @@ def subject_new_submit():
 	if logo.filename:
 		public_url = upload_file(logo, public_id)
 
-	new_subject = Subject(private_id, public_id, title, description, public_url, live=True, shown_save_alert=False)
+	new_subject = Subject(private_id, public_id, title, description, public_url, live=True)
 	subjects.document(public_id).set(new_subject.to_dict())
 	
-	return redirect(f'/subject/{private_id}')
+	return render_template('subject_created.html', private_id=private_id)
 
-@flask_app.route('/subject/<private_id>')
+@flask_app.route('/company/<private_id>')
 def subject(private_id):
 	subject = fetch_subject_private(private_id)
 	docs = subjects.document(subject.public_id).collection('feedback').order_by('timestamp', direction=firestore.firestore.Query.DESCENDING).get()
 	feedbacks = list(map(lambda x: Feedback.from_dict(x.to_dict()), docs))
 
-	if not subject.shown_save_alert:
-		subject.shown_save_alert = True
-		subjects.document(subject.public_id).set(subject.to_dict())
-		subject.shown_save_alert = False
-
 	return render_template('subject.html', feedbacks=feedbacks, subject=subject)
 
-@flask_app.route('/subject/<private_id>/delete')
+@flask_app.route('/company/<private_id>/delete')
 def subject_delete(private_id):
 	subject = fetch_subject_private(private_id)
 	subjects.document(subject.public_id).delete()
@@ -86,20 +81,20 @@ def subject_delete(private_id):
 
 	return render_template('subject_deleted.html')
 
-@flask_app.route('/subject/<private_id>/toggle_live')
+@flask_app.route('/company/<private_id>/toggle_live')
 def subject_toggle_live(private_id):
 	subject = fetch_subject_private(private_id)
 	subject.live = not subject.live
 	subjects.document(subject.public_id).set(subject.to_dict())
 
-	return redirect(f'/subject/{private_id}')
+	return redirect(f'/company/{private_id}')
 
-@flask_app.route('/subject/<private_id>/feedback/<feedback_id>/delete')
+@flask_app.route('/company/<private_id>/feedback/<feedback_id>/delete')
 def feedback_delete(private_id, feedback_id):
 	subject = fetch_subject_private(private_id)
 	subjects.document(subject.public_id).collection('feedback').document(feedback_id).delete()
 
-	return redirect(f'/subject/{private_id}')
+	return redirect(f'/company/{private_id}')
 
 @flask_app.route('/send/<public_id>')
 def feedback_send(public_id):

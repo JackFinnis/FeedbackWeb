@@ -1,14 +1,13 @@
 import datetime
 
 class Subject:
-    def __init__(self, private_id, public_id, title, description, photo_url, live, shown_save_alert):
+    def __init__(self, private_id, public_id, title, description, photo_url, live):
         self.private_id = private_id
         self.public_id = public_id
         self.title = title
         self.description = description
         self.photo_url = photo_url
         self.live = live
-        self.shown_save_alert = shown_save_alert
     
     def to_dict(self):
         return {
@@ -17,8 +16,7 @@ class Subject:
             'title': self.title,
             'description': self.description,
             'photo_url': self.photo_url,
-            'live': self.live,
-            'shown_save_alert': self.shown_save_alert,
+            'live': self.live
         }
 
     @staticmethod
@@ -29,8 +27,7 @@ class Subject:
             dict['title'],
             dict['description'],
             dict['photo_url'],
-            dict['live'],
-            dict['shown_save_alert']
+            dict['live']
         )
     
 class Feedback:

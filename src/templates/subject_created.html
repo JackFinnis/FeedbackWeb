@@ -1,0 +1,40 @@
+<html>
+  	<head>
+    	<title>Feedback Page Created</title>
+        <link rel="stylesheet" href="/static/style.css">
+		<link rel="icon" href="/static/images/favicon.ico">
+		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
+	</head>
+	<body class="center_vertically center_horizontally">
+		<div style="width:400px; height:330px; text-align:center;">
+			<img class="large_symbol" src="/static/images/checkmark.circle.png">
+			<h1>Feedback Page Created</h1>
+            Please now copy the link to your feedback summary page and save it somewhere safe so you can return to the page in future.
+            <button id="copy_button" class="large_button" style="padding:10px;" onclick="copy_feedback_summary_link()">
+                <img id="copy_button_image" class="symbol" src="/static/images/doc.on.doc.png">
+                <p id="copy_button_label" style="line-height:20px; vertical-align:top; display:inline-block; margin-left:3px;">Copy Feedback Summary Page Link</p>
+            </button>
+            <br><br>
+            <div id="view_feedback_summary">
+                You can now view your feedback on your private feedback summary page.
+                <a class="large_button" href="/company/{{private_id}}">View Feedback Summary Page</a>
+            </div>
+		</div>
+	</body>
+    <script>
+        let copy_button = document.getElementById('copy_button')
+        let copy_button_image = document.getElementById('copy_button_image')
+        let copy_button_label = document.getElementById('copy_button_label')
+        let view_feedback_summary = document.getElementById('view_feedback_summary')
+
+        view_feedback_summary.style.display = 'none'
+
+		function copy_feedback_summary_link() {
+			navigator.clipboard.writeText('{{url_for("subject", private_id=private_id, _external=True)}}')
+			copy_button.style.opacity = 0.75
+			copy_button_image.src = '/static/images/checkmark.circle.fill.png'
+			copy_button_label.innerHTML = 'Feedback Summary Page Link Copied'
+            view_feedback_summary.style.display = 'block'
+		}
+    </script>
+</html>
