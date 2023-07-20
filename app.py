@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, redirect, abort
-from firebase_admin import credentials, firestore, initialize_app, storage
+from firebase_admin import firestore, credentials, initialize_app, storage
 from google.cloud.firestore_v1.base_query import FieldFilter
 from models import *
+from creds import creds_file
 import random
 import string
 
 # Configure Firebase
-creds = credentials.Certificate('creds.json')
+creds = credentials.Certificate(creds_file)
 firebase_app = initialize_app(creds, {
 	'storageBucket': 'feedback-5331f.appspot.com'
 })
