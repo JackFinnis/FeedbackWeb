@@ -111,5 +111,3 @@ def feedback_submit(public_id):
 @flask_app.errorhandler(404)
 def error_404(e):
 	return render_template('error_404.html')
-
-flask_app.run()
