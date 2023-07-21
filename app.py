@@ -46,16 +46,15 @@ def root():
 
 @flask_app.route('/create')
 def subject_new():
-	return render_template('create_subject.html')
+	return render_template('create_subject.html', private_id=get_id())
 
-@flask_app.route('/create', methods=['POST'])
-def subject_new_submit():
+@flask_app.route('/<private_id>', methods=['POST'])
+def subject_new_submit(private_id):
 	title = request.form['title']
 	description = request.form['description']
 	logo = request.files['logo']
 
 	public_id = get_id()
-	private_id = get_id()
 	public_url = None
 	if logo.filename:
 		public_url = upload_file(logo, public_id)
@@ -72,6 +71,15 @@ def subject(private_id):
 	feedbacks = list(map(lambda x: Feedback.from_dict(x.to_dict()), docs))
 
 	return render_template('subject.html', feedbacks=feedbacks, subject=subject)
+
+@flask_app.route('/<private_id>/delete')
+def subject_delete(private_id):
+	subject = fetch_subject_private(private_id)
+	subjects.document(subject.public_id).delete()
+	if subject.photo_url:
+		bucket.blob(subject.public_id).delete()
+
+	return render_template('subject_deleted.html')
 
 @flask_app.route('/<private_id>/toggle_live')
 def subject_toggle_live(private_id):

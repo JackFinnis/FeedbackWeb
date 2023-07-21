@@ -2,13 +2,13 @@
   	<head>
     	<title>{{subject.title}} Feedback Summary</title>
         <link rel="stylesheet" href="/static/style.css">
-		<link rel="icon" href="/static/images/favicon.ico">
-		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
+		<link rel="icon" href="/static/images/favicon.png">
+		<link rel="apple-touch-icon" href="/static/images/favicon.png">
         <meta name="viewport" content="width=device-width">
 		<style>
 			.logo {
-				width: 80px;
-				height: 80px;
+				width: 100px;
+				height: 100px;
 				margin-right: 20px;
 				border-radius: 50%;
 				float: left;
@@ -17,37 +17,52 @@
 	</head>
 	<body class="center_horizontally">
 		<div style="max-width:800px;">
+			<p style="height:0; overflow:hidden;">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+
 			<div style="display:flex; align-items:center; margin-bottom:10px;">
 				{% if subject.photo_url %}
 				<img class="logo shadow" src="{{subject.photo_url}}">
 				{% endif %}
-				<h1>{{subject.title}}</h1>
+				<div>
+					<h1 style="padding-top:5px;">{{subject.title}}</h1>
+					<a class="label" target="_blank" href="/send/{{subject.public_id}}">
+						<img class="symbol" src="/static/symbols/square.and.arrow.up.right.png" >
+						<p class="label_title">View Feedback Page</p>
+					</a>
+				</div>
+			</div>
+
+			<h2>Share Feedback Page</h2>
+			<div style="font-size:0;">
+				<a class="label" target="_blank" href="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={{url_for('feedback_send', public_id=subject.public_id, _external=True)}}">
+					<img class="symbol" src="/static/symbols/qrcode.png" >
+					<p class="label_title">Download QR Code</p>
+				</a>
+				<button class="label" id="copy_button" onclick="copy_feedback_link()">
+					<img id="copy_button_image" class="symbol" src="/static/symbols/doc.on.doc.png">
+					<p id="copy_button_label" class="label_title">Copy Link</p>
+				</button>
 			</div>
 			
 			<h2>Manage Feedback Page</h2>
 			<div style="font-size:0;">
-				<a class="label" target="_blank" href="/send/{{subject.public_id}}">
-					<img class="symbol" src="/static/images/square.and.arrow.up.right.png" >
-					<p class="label_title">View Feedback Page</p>
-				</a>
-				<a class="label" target="_blank" href="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={{url_for('feedback_send', public_id=subject.public_id, _external=True)}}">
-					<img class="symbol" src="/static/images/qrcode.png" >
-					<p class="label_title">View Feedback Page QR Code</p>
-				</a>
 				<a class="label" href="/{{subject.private_id}}/toggle_live">
 					{% if subject.live %}
-					<img class="symbol" src="/static/images/pause.fill.png">
-					<p class="label_title">Disable Feedback Page</p>
+					<img class="symbol" src="/static/symbols/pause.fill.png">
+					<p class="label_title">Disable Page</p>
 					{% else %}
-					<img class="symbol" src="/static/images/play.fill.png">
-					<p class="label_title">Enable Feedback Page</p>
+					<img class="symbol" src="/static/symbols/play.fill.png">
+					<p class="label_title">Enable Page</p>
 					{% endif %}
 				</a>
-				<button class="label" id="copy_button" onclick="copy_feedback_link()">
-					<img id="copy_button_image" class="symbol" src="/static/images/doc.on.doc.png">
-					<p id="copy_button_label" class="label_title">Copy Feedback Page Link</p>
+				<button class="label container_background" onclick="confirm_delete_subject()">
+					<img class="icon" src="/static/symbols/trash.png">
+					<p class="label_title_destructive">Delete Page</p>
 				</button>
 			</div>
+
+			<h2>Feedback Prompt</h2>
+			<p style="margin-left:12px; margin-bottom:10px;">{{subject.description}}</p>
 
 			{% if feedbacks %}
 				<div>
@@ -55,11 +70,11 @@
 					<h2 style="float:right; color:var(--secondary); font-weight:normal;">{{feedbacks|count}}</h2>
 				</div>
 				{% for feedback in feedbacks %}
-					<div class="container">
+					<div class="container" style="margin-bottom:10px;">
 						<div style="float:right; margin-left:10px;">
 							<p style="color:var(--secondary); padding-right:5px; display:inline-block; line-height:20px; vertical-align:top;">{{feedback.get_formatted_timestamp()}}</p>
 							<a href="/{{subject.private_id}}/feedback/{{feedback.feedback_id}}/delete">
-								<img class="icon" src="/static/images/trash.png">
+								<img class="icon" src="/static/symbols/trash.png">
 							</a>
 						</div>
 						{{feedback.feedback}}
@@ -78,7 +93,7 @@
 
 			navigator.clipboard.writeText('{{url_for("feedback_send", public_id=subject.public_id, _external=True)}}')
 			copy_button.style.opacity = 0.75
-			copy_button_img.src = '/static/images/checkmark.circle.fill.png'
+			copy_button_img.src = '/static/symbols/checkmark.circle.fill.png'
 			copy_button_label.innerHTML = 'Link Copied'
 		}
 

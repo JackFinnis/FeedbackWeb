@@ -121,15 +121,15 @@ h2 {
 .label {
 	color: white;
 	background-color: var(--accent);
-	padding-top: 7px;
-	padding-bottom: 5px;
+	padding-top: 8px;
+	padding-bottom: 6px;
 	padding-left: 10px;
 	padding-right: 10px;
 	margin-right: 10px;
 	margin-bottom: 10px;
 }
 
-.label_title {
+.label_title, .label_title_destructive {
 	display: inline-block;
 	vertical-align: top;
 	line-height: 20px;
@@ -137,6 +137,10 @@ h2 {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+}
+
+.label_title_destructive {
+	color: var(--red);
 }
 
 button:active:enabled, a:active, label[for]:active {

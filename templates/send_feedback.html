@@ -2,22 +2,23 @@
   	<head>
     	<title>Send {{subject.title}} Feedback</title>
         <link rel="stylesheet" href="/static/style.css">
-		<link rel="icon" href="/static/images/favicon.ico">
-		<link rel="apple-touch-icon" href="/static/images/favicon.ico">
+		<link rel="icon" href="/static/images/favicon.png">
+		<link rel="apple-touch-icon" href="/static/images/favicon.png">
         <meta name="viewport" content="width=device-width">
 		<style>
 			.feedback_form_box {
 				width: calc(100% - 20px);
-				height: 160px;
+				height: 100px;
 				padding: 10px;
 				display: flex;
 				text-align: center; 
 				justify-content: center;
 				align-items: center;
+				margin-bottom: 60px;
 			}
 		</style>
 	</head>
-	<body class="center_vertically center_horizontally">
+	<body class="center_horizontally center_vertically">
 		<div style="max-width:400px;">
 			<p style="height:0; overflow:hidden;">--------------------------------------------------------------------------------------</p>
 
@@ -31,18 +32,16 @@
 			
 			{% if not subject.live %}
 				<div class="feedback_form_box container_background">
-					<div style="margin-bottom:10px;">
-						<img class="large_symbol" src="/static/images/nosign.png">
-						<h2>Responses Closed</h2>
-						This page is not currently accepting feedback.
+					<div>
+						<img class="large_symbol" src="/static/symbols/nosign.png">
+						<h2>Feedback Page Closed</h2>
 					</div>
 				</div>
 			{% elif submitted %}
 				<div class="feedback_form_box container_background">
-					<div style="margin-bottom:10px;">
-						<img class="large_symbol" src="/static/images/checkmark.circle.png">
+					<div>
+						<img class="large_symbol" src="/static/symbols/checkmark.circle.png">
 						<h2>Feedback Submitted</h2>
-						Thanks for your feedback!
 					</div>
 				</div>
 			{% else %}
