@@ -10,22 +10,37 @@ ol, ul, p, h1, h2, form, textarea, a, button, body {
 	padding: 0px;
 }
 
+p, textarea {
+	white-space: pre-wrap;
+}
+
 img {
 	object-fit: cover;
 }
 
 body {
-	margin: 20px;
-	margin-bottom: 50px;
+	min-height: 100vh;
+	box-sizing: border-box;
+	padding: 20px;
+	padding-bottom: 50px;
+}
+
+.center_horizontally {
+	display: flex;
+	justify-content: center;
+}
+
+.center_vertically {
+	align-items: center;
 }
 
 ol {
 	counter-reset: item;
+	padding: 5px;
 	padding-left: 40px;
 }
 
 li {
-	display: block;
 	counter-increment: item;
 	position: relative;
 	height: 45px;
@@ -49,23 +64,14 @@ li::before {
 }
 
 a, button {
+	border: none;
+	background: none;
+	font-size: 1rem;
 	display: inline-block;
 	color: var(--accent);
 	text-decoration: none;
 	font-weight: 500;
 	font-size: 1rem;
-}
-
-input[type=submit], textarea, a, button {
-	border: none;
-	background: none;
-	font-size: 1rem;
-}
-
-textarea {
-	display: block;
-	resize: none;
-	width: 100%;
 }
 
 h1 {
@@ -76,16 +82,7 @@ h2 {
 	padding: 10px 12px;
 }
 
-.center_horizontally {
-	display: flex;
-	justify-content: center;
-}
-
-.center_vertically {
-	align-items: center;
-}
-
-.container, .label, .container_background, .large_button {
+.container, .label, .secondary_container, .shadow_container, .large_button {
 	border-radius: 10px;
 }
 
@@ -99,23 +96,23 @@ h2 {
 	margin-top: 20px;
 }
 
-.container {
+.container_padding {
 	padding: 12px;
 	padding-top: 10px;
-}
-
-.icon, .symbol {
-	width: 20px;
-	height: 20px;
-}
-
-.symbol {
-	filter: invert(1);
 }
 
 .large_symbol {
 	width: 40px;
 	height: 40px;
+}
+
+.label_icon {
+	filter: invert(1);
+}
+
+.label_icon_destructive, .label_icon {
+	width: 20px;
+	height: 20px;
 }
 
 .label {
@@ -125,8 +122,6 @@ h2 {
 	padding-bottom: 6px;
 	padding-left: 10px;
 	padding-right: 10px;
-	margin-right: 10px;
-	margin-bottom: 10px;
 }
 
 .label_title, .label_title_destructive {
@@ -134,9 +129,6 @@ h2 {
 	vertical-align: top;
 	line-height: 20px;
 	margin-left: 3px;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
 }
 
 .label_title_destructive {
@@ -147,9 +139,15 @@ button:active:enabled, a:active, label[for]:active {
 	opacity: 0.75;
 }
 
-.feedback_form_logo, input[type=file] {
+.large_logo, input[type=file] {
 	width: 130px;
 	height: 130px;
+	border-radius: 50%;
+}
+
+.small_logo {
+	width: 90px;
+	height: 90px;
 	border-radius: 50%;
 }
 
@@ -158,47 +156,95 @@ input[type=file] {
 	opacity: 0;
 }
 
-.feedback_form_textarea {
-	height: 120px;
+textarea {
+	appearance: none;
+	border: none;
+	background: none;
+	font-size: 1rem;
+	display: block;
+	resize: none;
 	width: 100%;
+	box-sizing: border-box;
+	font-family: system-ui;
+}
+
+.title_textarea {
+	text-align: center;
+	font-size: 2rem;
+	font-weight: bolder;
+	padding: 10px 0px;
+}
+
+.title_textarea:focus::placeholder {
+	color: transparent;
+}
+
+.description_textarea {
+	text-align: justify;
+	padding: 10px;
+	padding-left: 12px;
+}
+
+.title_textarea, .description_textarea {
+	outline: none;
+}
+
+.title_textarea::placeholder, .description_textarea::placeholder {
+	color: var(--accent);
+	opacity: 1;
+}
+
+.label_box {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 20px;
+	padding-bottom: 25px;
+	display: flex;
+	text-align: center; 
+	justify-content: center;
+	align-items: center;
 }
 
 @media(prefers-color-scheme: light) {
-	body, .container, .container_background, textarea {
+	body, textarea {
 		color: black;
 	}
 
-	body, .background {
+	body {
 		background-color: white;
 	}
 
-	.container, .container_background {
+	.container, .secondary_container {
 		background-color: #f0f0f0;
 	}
 
-	.shadow {
+	.shadow, .shadow_container {
 		box-shadow: 0px 5px 10px lightgray;
 	}
 }
 
 @media(prefers-color-scheme: dark) {
-	body, .container, .container_background, textarea {
+	body, textarea {
 		color: white;
 	}
 
-	body, .background {
+	body {
 		background-color: black;
 	}
 
-	.container, .container_background {
+	.container, .shadow_container {
 		background-color: #202020;
+	}
+
+	.secondary_container {
+		background-color: #404040;
+	}
+
+	.shadow {
+		background-color: black;
 	}
 	
 	.large_symbol {
 		filter: invert(1);
-	}
-
-	.shadow {
-		box-shadow: 0px 5px 10px dimgray;
 	}
 }

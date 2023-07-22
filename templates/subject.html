@@ -1,68 +1,79 @@
+<!DOCTYPE html>
 <html>
   	<head>
-    	<title>{{subject.title}} Feedback Summary</title>
+    	<title>View {{subject.title}} Feedback</title>
         <link rel="stylesheet" href="/static/style.css">
 		<link rel="icon" href="/static/images/favicon.png">
 		<link rel="apple-touch-icon" href="/static/images/favicon.png">
         <meta name="viewport" content="width=device-width">
-		<style>
-			.logo {
-				width: 100px;
-				height: 100px;
-				margin-right: 20px;
-				border-radius: 50%;
-				float: left;
-			}
-		</style>
+		<script src="/static/script.js" defer></script>
 	</head>
 	<body class="center_horizontally">
-		<div style="max-width:800px;">
+		<div style="max-width:800px; min-width:0px;">
 			<p style="height:0; overflow:hidden;">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
 
-			<div style="display:flex; align-items:center; margin-bottom:10px;">
-				{% if subject.photo_url %}
-				<img class="logo shadow" src="{{subject.photo_url}}">
-				{% endif %}
-				<div>
-					<h1 style="padding-top:5px;">{{subject.title}}</h1>
-					<a class="label" target="_blank" href="/send/{{subject.public_id}}">
-						<img class="symbol" src="/static/symbols/square.and.arrow.up.right.png" >
-						<p class="label_title">View Feedback Page</p>
-					</a>
-				</div>
-			</div>
-
-			<h2>Share Feedback Page</h2>
-			<div style="font-size:0;">
-				<a class="label" target="_blank" href="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={{url_for('feedback_send', public_id=subject.public_id, _external=True)}}">
-					<img class="symbol" src="/static/symbols/qrcode.png" >
-					<p class="label_title">Download QR Code</p>
-				</a>
-				<button class="label" id="copy_button" onclick="copy_feedback_link()">
-					<img id="copy_button_image" class="symbol" src="/static/symbols/doc.on.doc.png">
-					<p id="copy_button_label" class="label_title">Copy Link</p>
-				</button>
-			</div>
-			
-			<h2>Manage Feedback Page</h2>
-			<div style="font-size:0;">
-				<a class="label" href="/{{subject.private_id}}/toggle_live">
-					{% if subject.live %}
-					<img class="symbol" src="/static/symbols/pause.fill.png">
-					<p class="label_title">Disable Page</p>
-					{% else %}
-					<img class="symbol" src="/static/symbols/play.fill.png">
-					<p class="label_title">Enable Page</p>
+			<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; margin-bottom:10px; gap:20px;">
+				<div style="display:flex; align-items:center; gap:20px;">
+					{% if subject.photo_url %}
+					<img class="small_logo shadow" src="{{subject.photo_url}}">
 					{% endif %}
+					<h1 id="title" style="display:inline-block; ">{{subject.title}}</h1>
+				</div>
+				<a class="label" style="margin:10px 0px;" target="_blank" href="/send/{{subject.public_id}}">
+					<img class="label_icon" src="/static/symbols/square.and.arrow.up.right.png" >
+					<p class="label_title">View Feedback Page</p>
 				</a>
-				<button class="label container_background" onclick="confirm_delete_subject()">
-					<img class="icon" src="/static/symbols/trash.png">
-					<p class="label_title_destructive">Delete Page</p>
-				</button>
 			</div>
 
-			<h2>Feedback Prompt</h2>
-			<p style="margin-left:12px; margin-bottom:10px;">{{subject.description}}</p>
+			<div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px;">
+				<div style="font-size:0; display:inline-block;">
+					<h2 style="font-size:1.5rem;">Share Feedback Page</h2>
+					<div style="display:flex; gap:10px;">
+						<button class="label" id="copy_button" onclick="copy_feedback_link()">
+							<img id="copy_button_image" class="label_icon" src="/static/symbols/doc.on.doc.png">
+							<p id="copy_button_label" class="label_title">Copy Link</p>
+						</button>
+						<a class="label" target="_blank" href="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={{url_for('feedback_send', public_id=subject.public_id, _external=True)}}">
+							<img class="label_icon" src="/static/symbols/qrcode.png" >
+							<p class="label_title">Download QR Code</p>
+						</a>
+					</div>
+				</div>
+				
+				<div style="font-size:0; display:inline-block;">
+					<h2 style="font-size:1.5rem;">Manage Feedback Page</h2>
+					<div style="display:flex; gap:10px;">
+						<a class="label" href="/{{subject.private_id}}/toggle_live">
+							{% if subject.live %}
+							<img class="label_icon" src="/static/symbols/pause.fill.png">
+							<p class="label_title">Disable Page</p>
+							{% else %}
+							<img class="label_icon" src="/static/symbols/play.fill.png">
+							<p class="label_title">Enable Page</p>
+							{% endif %}
+						</a>
+						<button class="label container" onclick="confirm_delete_subject()">
+							<img class="label_icon_destructive" src="/static/symbols/trash.png">
+							<p class="label_title_destructive">Delete Page</p>
+						</button>
+					</div>
+				</div>
+			</div><br><br>
+
+			<form action="/{{subject.private_id}}/description" method="POST">
+				<div style="display:flex; align-items:center;">
+					<h2 style="display:inline-block;">Feedback Prompt</h2>
+					<button type="button" style="margin-left:auto; margin-right:0px; margin-bottom:0px;" class="label" id="edit_button" onclick="edit_description()">
+						<img id="edit_button_image" class="label_icon" src="/static/symbols/pencil.png">
+						<p id="edit_button_label" class="label_title">Edit</p>
+					</button>
+					<button style="margin-left:auto; margin-right:0px; margin-bottom:0px;" class="label" id="save_button">
+						<img id="edit_button_image" class="label_icon" src="/static/symbols/checkmark.circle.png">
+						<p id="edit_button_label" class="label_title">Save</p>
+					</button>
+				</div>
+				<textarea class="description_textarea" style="padding-top:0px; text-align:left;" rows="1" id="description" name="description" placeholder="What would you like feedback on?" required oninvalid="setCustomValidity('Please enter what you would like feedback on')" oninput="setCustomValidity('')">{{subject.description}}</textarea>
+			</form>
 
 			{% if feedbacks %}
 				<div>
@@ -70,31 +81,58 @@
 					<h2 style="float:right; color:var(--secondary); font-weight:normal;">{{feedbacks|count}}</h2>
 				</div>
 				{% for feedback in feedbacks %}
-					<div class="container" style="margin-bottom:10px;">
+					<div class="container container_padding" style="margin-bottom:10px;">
 						<div style="float:right; margin-left:10px;">
 							<p style="color:var(--secondary); padding-right:5px; display:inline-block; line-height:20px; vertical-align:top;">{{feedback.get_formatted_timestamp()}}</p>
 							<a href="/{{subject.private_id}}/feedback/{{feedback.feedback_id}}/delete">
-								<img class="icon" src="/static/symbols/trash.png">
+								<img class="label_icon_destructive" src="/static/symbols/trash.png">
 							</a>
 						</div>
-						{{feedback.feedback}}
+						<p style="display:inline-block;">{{feedback.feedback}}</p>
 					</div>
 				{% endfor %}
 			{% else %}
-				<h2>No Feedback Yet</h2>
+				<div style="margin-top:10px;" class="label_box container">
+					<div>
+						<img class="large_symbol" src="/static/symbols/bubble.right.png">
+						<h2>No Feedback Yet</h2>
+						Share your feedback page to start receieving feedback!
+					</div>
+				</div>
 			{% endif %}
 		</div>
 	</body>
 	<script>
-		function copy_feedback_link() {
-			let copy_button = document.getElementById('copy_button')
-			let copy_button_img = document.getElementById('copy_button_image')
-			let copy_button_label = document.getElementById('copy_button_label')
+		let copy_button = document.getElementById('copy_button')
+		let copy_button_image = document.getElementById('copy_button_image')
+		let copy_button_label = document.getElementById('copy_button_label')
 
+		let title = document.getElementById('title')
+		let description = document.getElementById('description')
+
+		let save_button = document.getElementById('save_button')
+		let edit_button = document.getElementById('edit_button')
+		let edit_button_image = document.getElementById('edit_button_image')
+		let edit_button_label = document.getElementById('edit_button_label')
+
+		description.addEventListener('input', update_description_height)
+
+		save_button.style.display = 'none'
+		description.disabled = true
+		update_description_height()
+
+		function copy_feedback_link() {
 			navigator.clipboard.writeText('{{url_for("feedback_send", public_id=subject.public_id, _external=True)}}')
 			copy_button.style.opacity = 0.75
-			copy_button_img.src = '/static/symbols/checkmark.circle.fill.png'
+			copy_button_image.src = '/static/symbols/checkmark.circle.fill.png'
 			copy_button_label.innerHTML = 'Link Copied'
+		}
+
+		function edit_description() {
+			description.disabled = false;
+			description.style.color = 'var(--accent)'
+			edit_button.style.display = 'none'
+			save_button.style.display = 'block'
 		}
 
 		function confirm_delete_subject() {
@@ -102,6 +140,11 @@
 			if (result) {
 				location.href = '/{{subject.private_id}}/delete'
 			}
+		}
+
+		function update_description_height() {
+			description.style.height = 'auto'
+            description.style.height = description.scrollHeight + 'px'
 		}
 	</script>
 </html>

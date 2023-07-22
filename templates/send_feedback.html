@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   	<head>
     	<title>Send {{subject.title}} Feedback</title>
@@ -5,18 +6,7 @@
 		<link rel="icon" href="/static/images/favicon.png">
 		<link rel="apple-touch-icon" href="/static/images/favicon.png">
         <meta name="viewport" content="width=device-width">
-		<style>
-			.feedback_form_box {
-				width: calc(100% - 20px);
-				height: 100px;
-				padding: 10px;
-				display: flex;
-				text-align: center; 
-				justify-content: center;
-				align-items: center;
-				margin-bottom: 60px;
-			}
-		</style>
+		<script src="/static/script.js" defer></script>
 	</head>
 	<body class="center_horizontally center_vertically">
 		<div style="max-width:400px;">
@@ -24,32 +14,47 @@
 
 			<div style="text-align:center;">
 				{% if subject.photo_url %}
-					<img class="shadow feedback_form_logo" src="{{subject.photo_url}}">
+					<img class="shadow large_logo" src="{{subject.photo_url}}">
 				{% endif %}
 				<h1>{{subject.title}}</h1>
 			</div>
 			<p style="text-align:justify; padding:12px; padding-top:10px;">{{subject.description}}</p>
 			
 			{% if not subject.live %}
-				<div class="feedback_form_box container_background">
-					<div>
-						<img class="large_symbol" src="/static/symbols/nosign.png">
-						<h2>Feedback Page Closed</h2>
+				<div style="height:180px;">
+					<div class="label_box container">
+						<div>
+							<img class="large_symbol" src="/static/symbols/nosign.png">
+							<h2>Feedback Page Closed</h2>
+							This page is not currently accepting responses.
+						</div>
 					</div>
 				</div>
 			{% elif submitted %}
-				<div class="feedback_form_box container_background">
-					<div>
-						<img class="large_symbol" src="/static/symbols/checkmark.circle.png">
-						<h2>Feedback Submitted</h2>
+				<div style="height:180px;">
+					<div class="label_box container">
+						<div>
+							<img class="large_symbol" src="/static/symbols/checkmark.circle.png">
+							<h2>Feedback Submitted</h2>
+							Thank you for your feedback!
+						</div>
 					</div>
 				</div>
 			{% else %}
-				<form action="/send/{{subject.public_id}}" method="POST">
-					<textarea class="feedback_form_textarea container" id="feedback" name="feedback" placeholder="Enter your feedback" autofocus required oninvalid="setCustomValidity('Please enter your feedback')" oninput="setCustomValidity('')"></textarea>
+				<form style="min-height:180px;" action="/send/{{subject.public_id}}" method="POST">
+					<textarea class="container container_padding" id="feedback" name="feedback" rows="5" placeholder="Enter your feedback" autofocus required oninvalid="setCustomValidity('Please enter your feedback')" oninput="setCustomValidity('')"></textarea>
 					<button class="large_button">Submit Feedback</button>
 				</form>
 			{% endif %}
 		</div>
 	</body>
+	<script>
+		let feedback = document.getElementById('feedback')
+		feedback.addEventListener('input', update_height)
+
+		function update_height() {
+			this.style.height = 'auto'
+            this.style.height = this.scrollHeight + 'px'
+		}
+	</script>
 </html>

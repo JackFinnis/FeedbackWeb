@@ -89,6 +89,15 @@ def subject_toggle_live(private_id):
 
 	return redirect(f'/{private_id}')
 
+@flask_app.route('/<private_id>/description', methods=['POST'])
+def subject_update_description(private_id):
+	subject = fetch_subject_private(private_id)
+	description = request.form['description']
+	subject.description = description
+	subjects.document(subject.public_id).set(subject.to_dict())
+
+	return redirect(f'/{private_id}')
+
 @flask_app.route('/<private_id>/feedback/<feedback_id>/delete')
 def feedback_delete(private_id, feedback_id):
 	subject = fetch_subject_private(private_id)
