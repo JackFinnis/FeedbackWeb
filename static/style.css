@@ -19,6 +19,7 @@ p, textarea {
 }
 
 img {
+	vertical-align: bottom;
 	object-fit: cover;
 }
 
@@ -127,7 +128,7 @@ h2 {
 	color: white;
 	background-color: var(--accent);
 	padding-top: 8px;
-	padding-bottom: 6px;
+	padding-bottom: 8px;
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -168,6 +169,7 @@ textarea {
 	appearance: none;
 	border: none;
 	background: none;
+	overflow: hidden;
 	font-size: 1rem;
 	display: block;
 	resize: none;
@@ -175,11 +177,16 @@ textarea {
 	font-family: system-ui;
 }
 
+textarea:focus, textarea:active {
+	outline-color: #95B2F5;
+}
+
 .title_textarea {
 	text-align: center;
 	font-size: 2rem;
 	font-weight: bolder;
 	padding: 10px 0px;
+	outline: none;
 }
 
 .title_textarea:focus::placeholder {
@@ -189,9 +196,6 @@ textarea {
 .description_textarea {
 	text-align: justify;
 	padding: 10px;
-}
-
-.title_textarea, .description_textarea {
 	outline: none;
 }
 

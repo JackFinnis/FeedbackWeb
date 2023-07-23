@@ -25,9 +25,9 @@ def upload_image(file: FileStorage, id: str) -> str:
 	image = resize_image(image, 300)
 
 	temp = BytesIO()
-	image.save(temp, "jpeg", optimize=True, quality=50)
+	image.save(temp, "jpeg", optimize=True, quality=90)
 	temp.seek(0)
-
+	
 	ref = bucket.blob(id)
 	ref.upload_from_file(temp, content_type='image/jpeg')
 	ref.make_public()

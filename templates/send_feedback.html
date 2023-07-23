@@ -21,7 +21,7 @@
 			<p style="text-align:justify; padding:10px; padding-top:10px;">{{subject.description}}</p>
 			
 			{% if not subject.live %}
-				<div style="height:180px;">
+				<div style="height:200px;">
 					<div class="label_box container">
 						<div>
 							<img class="large_symbol" src="/static/symbols/nosign.png">
@@ -31,7 +31,7 @@
 					</div>
 				</div>
 			{% elif submitted %}
-				<div style="height:180px;">
+				<div style="height:200px;">
 					<div class="label_box container">
 						<div>
 							<img class="large_symbol" src="/static/symbols/checkmark.circle.png">
@@ -41,7 +41,7 @@
 					</div>
 				</div>
 			{% else %}
-				<form style="min-height:180px;" action="/send/{{subject.public_id}}" method="POST">
+				<form style="min-height:200px;" action="/send/{{subject.public_id}}" method="POST">
 					<textarea class="container container_padding" id="feedback" name="feedback" rows="5" placeholder="Enter your feedback" autofocus required oninvalid="setCustomValidity('Please enter your feedback')" oninput="setCustomValidity('')"></textarea>
 					<button class="large_button">Submit Feedback</button>
 				</form>

@@ -24,7 +24,7 @@
 				</a>
 			</div>
 
-			<div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin-top:10px; margin-bottom:20px;">
+			<div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin-top:10px;">
 				<div style="font-size:0; display:inline-block;">
 					<h2 style="font-size:1.5rem;">Share Feedback Page</h2>
 					<div style="display:flex; flex-wrap:wrap; gap:10px;">
@@ -46,7 +46,7 @@
 				<div style="font-size:0; display:inline-block;">
 					<h2 style="font-size:1.5rem;">Manage Feedback Page</h2>
 					<div style="display:flex; flex-wrap:wrap; gap:10px;">
-						<a class="label" href="/{{subject.private_id}}/toggle_live">
+						<button class="label" onclick="location.href = '/{{subject.private_id}}/toggle_live'">
 							{% if subject.live %}
 							<img class="label_icon" src="/static/symbols/pause.fill.png">
 							<p class="label_title">Disable Page</p>
@@ -54,7 +54,7 @@
 							<img class="label_icon" src="/static/symbols/play.fill.png">
 							<p class="label_title">Enable Page</p>
 							{% endif %}
-						</a>
+						</button>
 						<button class="label container" onclick="confirm_delete_subject()">
 							<img class="label_icon_destructive" src="/static/symbols/trash.png">
 							<p class="label_title_destructive">Delete Page</p>
@@ -63,7 +63,7 @@
 				</div>
 			</div>
 
-			<form action="/{{subject.private_id}}/description" method="POST">
+			<form style="margin-top:20px;" action="/{{subject.private_id}}/description" method="POST">
 				<div style="display:flex; align-items:center;">
 					<h2 style="display:inline-block;">Feedback Prompt</h2>
 					<div style="margin-left:auto;">
@@ -77,28 +77,28 @@
 						</button>
 					</div>
 				</div>
-				<p id="description_old" class="description_textarea" style="padding-top:0px; text-align:left;">{{subject.description}}</p>
-				<textarea class="description_textarea" style="padding-top:0px; text-align:left; color:var(--accent);" rows="1" id="description" name="description" placeholder="What would you like feedback on?" required oninvalid="setCustomValidity('Please enter what you would like feedback on')" oninput="setCustomValidity('')">{{subject.description}}</textarea>
+				<p id="description_old" class="container container_padding" style="text-align:left;">{{subject.description}}</p>
+				<textarea class="container container_padding" style="text-align:left; color:var(--accent);" rows="1" id="description" name="description" placeholder="What would you like feedback on?" required oninvalid="setCustomValidity('Please enter what you would like feedback on')" oninput="setCustomValidity('')">{{subject.description}}</textarea>
 			</form>
 
+			<div style="margin-top:10px;">
+				<h2 style="display:inline-block;">Feedback</h2>
+				<h2 style="float:right; color:var(--secondary); font-weight:normal;">{{feedbacks|count}}</h2>
+			</div>
 			{% if feedbacks %}
-				<div>
-					<h2 style="display:inline-block;">Feedback</h2>
-					<h2 style="float:right; color:var(--secondary); font-weight:normal;">{{feedbacks|count}}</h2>
-				</div>
 				{% for feedback in feedbacks %}
 					<div class="container container_padding" style="margin-bottom:10px;">
 						<div style="float:right; margin-left:10px;">
 							<p style="color:var(--secondary); padding-right:5px; display:inline-block; line-height:20px; vertical-align:top;">{{feedback.get_formatted_timestamp()}}</p>
-							<a href="/{{subject.private_id}}/feedback/{{feedback.feedback_id}}/delete">
+							<button onclick="location.href = '/{{subject.private_id}}/feedback/{{feedback.feedback_id}}/delete'">
 								<img class="label_icon_destructive" src="/static/symbols/trash.png">
-							</a>
+							</button>
 						</div>
 						<p>{{feedback.feedback}}</p>
 					</div>
 				{% endfor %}
 			{% else %}
-				<div style="margin-top:10px;" class="label_box container">
+				<div class="label_box container">
 					<div>
 						<img class="large_symbol" src="/static/symbols/bubble.right.png">
 						<h2>No Feedback Yet</h2>
