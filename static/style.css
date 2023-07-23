@@ -5,6 +5,10 @@ html {
 	--secondary: #8A8A8E;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 ol, ul, p, h1, h2, form, textarea, a, button, body {
 	margin: 0px;
 	padding: 0px;
@@ -20,8 +24,7 @@ img {
 
 body {
 	min-height: 100vh;
-	box-sizing: border-box;
-	padding: 20px;
+	padding: 15px;
 	padding-bottom: 50px;
 }
 
@@ -79,11 +82,16 @@ h1 {
 }
 
 h2 {
-	padding: 10px 12px;
+	padding: 10px;
 }
 
 .container, .label, .secondary_container, .shadow_container, .large_button {
 	border-radius: 10px;
+}
+
+.shadow_container {
+	padding: 20px;
+	border-radius: 30px;
 }
 
 .large_button {
@@ -97,8 +105,8 @@ h2 {
 }
 
 .container_padding {
-	padding: 12px;
-	padding-top: 10px;
+	padding: 10px;
+	padding-bottom: 12px;
 }
 
 .large_symbol {
@@ -139,7 +147,7 @@ button:active:enabled, a:active, label[for]:active {
 	opacity: 0.75;
 }
 
-.large_logo, input[type=file] {
+.large_logo {
 	width: 130px;
 	height: 130px;
 	border-radius: 50%;
@@ -164,7 +172,6 @@ textarea {
 	display: block;
 	resize: none;
 	width: 100%;
-	box-sizing: border-box;
 	font-family: system-ui;
 }
 
@@ -182,7 +189,6 @@ textarea {
 .description_textarea {
 	text-align: justify;
 	padding: 10px;
-	padding-left: 12px;
 }
 
 .title_textarea, .description_textarea {
@@ -195,7 +201,6 @@ textarea {
 }
 
 .label_box {
-	box-sizing: border-box;
 	width: 100%;
 	padding: 20px;
 	padding-bottom: 25px;

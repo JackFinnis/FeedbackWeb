@@ -1,4 +1,4 @@
-import datetime
+from helpers import *
 
 class Subject:
     def __init__(self, private_id, public_id, title, description, photo_url, live):
@@ -53,20 +53,3 @@ class Feedback:
             dict['feedback_id'],
             dict['timestamp']
         )
-
-def format_date(timestamp: datetime.datetime):
-    date = timestamp.date()
-    today = datetime.date.today()
-    yesterday = today - datetime.timedelta(days=1)
-    week_ago = today - datetime.timedelta(days=7)
-    
-    if date == today:
-        return timestamp.strftime('%H:%M')
-    elif date == yesterday:
-        return 'Yesterday'
-    elif date >= week_ago:
-        return timestamp.strftime('%A')
-    elif date.year == today.year:
-        return timestamp.strftime('%d %b')
-    else:
-        return timestamp.strftime('%d %b %Y')

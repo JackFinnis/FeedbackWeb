@@ -3,8 +3,8 @@
   	<head>
     	<title>Send {{subject.title}} Feedback</title>
         <link rel="stylesheet" href="/static/style.css">
-		<link rel="icon" href="/static/images/favicon.png">
-		<link rel="apple-touch-icon" href="/static/images/favicon.png">
+		<link rel="icon" href="{{subject.photo_url}}">
+		<link rel="apple-touch-icon" href="{{subject.photo_url}}">
         <meta name="viewport" content="width=device-width">
 		<script src="/static/script.js" defer></script>
 	</head>
@@ -18,7 +18,7 @@
 				{% endif %}
 				<h1>{{subject.title}}</h1>
 			</div>
-			<p style="text-align:justify; padding:12px; padding-top:10px;">{{subject.description}}</p>
+			<p style="text-align:justify; padding:10px; padding-top:10px;">{{subject.description}}</p>
 			
 			{% if not subject.live %}
 				<div style="height:180px;">

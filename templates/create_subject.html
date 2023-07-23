@@ -13,17 +13,17 @@
 			<p style="height:0; overflow:hidden;">--------------------------------------------------------------------------------------</p>
 
 			<h1 style="text-align:center; padding-bottom:20px;">Create a Feedback Page</h1>
-			<form action="/{{private_id}}" method="POST" enctype="multipart/form-data">
-				<div class="shadow_container" style="padding:20px; border-radius:30px;">
+			<form action="/create" method="POST" enctype="multipart/form-data">
+				<div class="shadow_container">
 					<div style="text-align:center;">
 						<label for="logo">
-							<input type="file" id="logo" name="logo" accept="image/*" required oninvalid="setCustomValidity('Please select a page logo')" oninput="setCustomValidity('')">
+							<input type="file" class="large_logo" id="logo" name="logo" accept="image/*" required oninvalid="setCustomValidity('Please select a page logo')" oninput="setCustomValidity('')">
 							<img class="large_logo shadow" id="logo_preview" src="/static/images/logo_placeholder.png">
 						</label>
 					</div>
 					<textarea class="title_textarea" rows="1" id="title" name="title" placeholder="Title" required oninvalid="setCustomValidity('Please enter a page title')" oninput="setCustomValidity('')"></textarea>
 					<textarea class="description_textarea" rows="1" id="description" name="description" placeholder="What would you like feedback on?" required oninvalid="setCustomValidity('Please enter what you would like feedback on')" oninput="setCustomValidity('')"></textarea>
-					<textarea class="secondary_container container_padding" rows="5" placeholder="Enter your feedback" disabled></textarea>
+					<textarea class="secondary_container container_padding" style="outline:none;" rows="5" placeholder="Enter your feedback" readonly></textarea>
 	
 					<button class="large_button" style="background-color:var(--secondary);" disabled>Submit Feedback</button>
 				</div>

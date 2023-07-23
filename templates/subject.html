@@ -12,28 +12,31 @@
 		<div style="max-width:800px; min-width:0px;">
 			<p style="height:0; overflow:hidden;">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
 
-			<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; margin-bottom:10px; gap:20px;">
-				<div style="display:flex; align-items:center; gap:20px;">
-					{% if subject.photo_url %}
-					<img class="small_logo shadow" src="{{subject.photo_url}}">
-					{% endif %}
-					<h1 id="title" style="display:inline-block; ">{{subject.title}}</h1>
-				</div>
-				<a class="label" style="margin:10px 0px;" target="_blank" href="/send/{{subject.public_id}}">
+			{% if subject.photo_url %}
+			<img style="float:left;" class="small_logo shadow" src="{{subject.photo_url}}">
+			{% endif %}
+
+			<div style="min-height:90px; padding-left:20px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;">
+				<h1 id="title" style="display:inline-block; padding:0px;">{{subject.title}}</h1>
+				<a class="label" target="_blank" href="/send/{{subject.public_id}}">
 					<img class="label_icon" src="/static/symbols/square.and.arrow.up.right.png" >
 					<p class="label_title">View Feedback Page</p>
 				</a>
 			</div>
 
-			<div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px;">
+			<div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin-top:10px; margin-bottom:20px;">
 				<div style="font-size:0; display:inline-block;">
 					<h2 style="font-size:1.5rem;">Share Feedback Page</h2>
-					<div style="display:flex; gap:10px;">
+					<div style="display:flex; flex-wrap:wrap; gap:10px;">
+						<button class="label" id="share_button" onclick="share_feedback_link()">
+							<img class="label_icon" src="/static/symbols/square.and.arrow.up.png">
+							<p class="label_title">Share Link</p>
+						</button>
 						<button class="label" id="copy_button" onclick="copy_feedback_link()">
 							<img id="copy_button_image" class="label_icon" src="/static/symbols/doc.on.doc.png">
 							<p id="copy_button_label" class="label_title">Copy Link</p>
 						</button>
-						<a class="label" target="_blank" href="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={{url_for('feedback_send', public_id=subject.public_id, _external=True)}}">
+						<a class="label" target="_blank" href="https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={{url_for('send_feedback', public_id=subject.public_id, _external=True)}}">
 							<img class="label_icon" src="/static/symbols/qrcode.png" >
 							<p class="label_title">Download QR Code</p>
 						</a>
@@ -42,7 +45,7 @@
 				
 				<div style="font-size:0; display:inline-block;">
 					<h2 style="font-size:1.5rem;">Manage Feedback Page</h2>
-					<div style="display:flex; gap:10px;">
+					<div style="display:flex; flex-wrap:wrap; gap:10px;">
 						<a class="label" href="/{{subject.private_id}}/toggle_live">
 							{% if subject.live %}
 							<img class="label_icon" src="/static/symbols/pause.fill.png">
@@ -58,21 +61,24 @@
 						</button>
 					</div>
 				</div>
-			</div><br><br>
+			</div>
 
 			<form action="/{{subject.private_id}}/description" method="POST">
 				<div style="display:flex; align-items:center;">
 					<h2 style="display:inline-block;">Feedback Prompt</h2>
-					<button type="button" style="margin-left:auto; margin-right:0px; margin-bottom:0px;" class="label" id="edit_button" onclick="edit_description()">
-						<img id="edit_button_image" class="label_icon" src="/static/symbols/pencil.png">
-						<p id="edit_button_label" class="label_title">Edit</p>
-					</button>
-					<button style="margin-left:auto; margin-right:0px; margin-bottom:0px;" class="label" id="save_button">
-						<img id="edit_button_image" class="label_icon" src="/static/symbols/checkmark.circle.png">
-						<p id="edit_button_label" class="label_title">Save</p>
-					</button>
+					<div style="margin-left:auto;">
+						<button type="button" class="label" id="edit_button" onclick="edit_description()">
+							<img id="edit_button_image" class="label_icon" src="/static/symbols/pencil.png">
+							<p id="edit_button_label" class="label_title">Edit</p>
+						</button>
+						<button class="label" id="save_button">
+							<img id="edit_button_image" class="label_icon" src="/static/symbols/checkmark.circle.png">
+							<p id="edit_button_label" class="label_title">Save</p>
+						</button>
+					</div>
 				</div>
-				<textarea class="description_textarea" style="padding-top:0px; text-align:left;" rows="1" id="description" name="description" placeholder="What would you like feedback on?" required oninvalid="setCustomValidity('Please enter what you would like feedback on')" oninput="setCustomValidity('')">{{subject.description}}</textarea>
+				<p id="description_old" class="description_textarea" style="padding-top:0px; text-align:left;">{{subject.description}}</p>
+				<textarea class="description_textarea" style="padding-top:0px; text-align:left; color:var(--accent);" rows="1" id="description" name="description" placeholder="What would you like feedback on?" required oninvalid="setCustomValidity('Please enter what you would like feedback on')" oninput="setCustomValidity('')">{{subject.description}}</textarea>
 			</form>
 
 			{% if feedbacks %}
@@ -103,36 +109,52 @@
 		</div>
 	</body>
 	<script>
+		let feedback_link = '{{url_for("send_feedback", public_id=subject.public_id, _external=True)}}'
+
 		let copy_button = document.getElementById('copy_button')
 		let copy_button_image = document.getElementById('copy_button_image')
 		let copy_button_label = document.getElementById('copy_button_label')
 
 		let title = document.getElementById('title')
 		let description = document.getElementById('description')
+		let description_old = document.getElementById('description_old')
 
+		let share_button = document.getElementById('share_button')
 		let save_button = document.getElementById('save_button')
 		let edit_button = document.getElementById('edit_button')
 		let edit_button_image = document.getElementById('edit_button_image')
 		let edit_button_label = document.getElementById('edit_button_label')
 
 		description.addEventListener('input', update_description_height)
+		description.addEventListener('focus', update_description_height)
 
+		description.style.display = 'none'
 		save_button.style.display = 'none'
-		description.disabled = true
 		update_description_height()
 
+		if (!navigator.share) {
+			share_button.style.display = 'none'
+		}
+
 		function copy_feedback_link() {
-			navigator.clipboard.writeText('{{url_for("feedback_send", public_id=subject.public_id, _external=True)}}')
+			navigator.clipboard.writeText(feedback_link)
 			copy_button.style.opacity = 0.75
 			copy_button_image.src = '/static/symbols/checkmark.circle.fill.png'
 			copy_button_label.innerHTML = 'Link Copied'
 		}
 
+		function share_feedback_link() {
+			navigator.share({
+				url: feedback_link
+			})
+		}
+
 		function edit_description() {
-			description.disabled = false;
-			description.style.color = 'var(--accent)'
+			description_old.style.display = 'none'
 			edit_button.style.display = 'none'
+			description.style.display = 'block'
 			save_button.style.display = 'block'
+			update_description_height()
 		}
 
 		function confirm_delete_subject() {
