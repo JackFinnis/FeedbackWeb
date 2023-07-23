@@ -21,6 +21,7 @@ subjects = db.collection('subject')
 def upload_image(file: FileStorage, id: str) -> str:
 	image = Image.open(file)
 	image = ImageOps.exif_transpose(image)
+	image = image.convert('RGB')
 	image = resize_image(image, 300)
 
 	temp = BytesIO()
